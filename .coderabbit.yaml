@@ -1,0 +1,4 @@
+# Docs-only repository: content is markdown and specs copied from gk, reviewed in the gk pull requests.
+reviews:
+  auto_review:
+    enabled: false
