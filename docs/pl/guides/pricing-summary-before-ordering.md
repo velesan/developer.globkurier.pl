@@ -7,7 +7,7 @@ Przed złożeniem zamówienia można pobrać całkowite rozliczenie zamówienia 
 
 Wykorzystujemy do tego endpoint [Get order price](../api/globkurier.md#/Order%20Pricing/orderGetPrice). 
 Endpoint przyjmuje podobne parametry co endpoint do składania zamówienia [Create order](../api/globkurier.md#/Orders/orderCreate). Należy podać wszystkie dane, które wskazał klient. 
-Zamiast parametery przesyłki dawać w sekcji body, wysyłamy w URL jako parametry.
+Zamiast parametry przesyłki dawać w sekcji body, wysyłamy w URL jako parametry.
 Zwrotnie otrzymamy szczegółowe dane związane z rozliczeniem zamówienia:
 
 | Pole | Opis |
@@ -32,4 +32,4 @@ Zwrotnie otrzymamy szczegółowe dane związane z rozliczeniem zamówienia:
 | `addonsGrossPrice` | kwota brutto za dodatki |
 | `discountNetPrice` | kwota rabatu naliczonego |
 | `packages[]` | Lista składowych przesyłek. |
-| `addons[]` | Lista dodatków, które prezentują kwoty netto (price) i brutto (proceGross) po przeliczeniu rabatu |
+| `addons[]` | Lista dodatków, które prezentują kwoty netto (price) i brutto (priceGross) po przeliczeniu rabatu |

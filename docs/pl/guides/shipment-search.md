@@ -30,7 +30,7 @@ W celu wyszukania transportu z punktu (ATM/PUDO) należy posłużyć się wyszuk
 | /products | collectionTypes | POINT | [Pobranie produktów](../api/globkurier.md#/Products/productSearch) |
 | /products | deliveryTypes | PICKUP | [Pobranie produktów](../api/globkurier.md#/Products/productSearch) |
 
-Nie ma wymagania podawania punktu nadawczego.
+Czy punkt jest wymagany, zależy od produktu: sprawdź `senderAddressPointId` / `receiverAddressPointId` w [Get custom required fields](../api/globkurier.md#/Orders/orderGetCustomRequiredFields).
 
 ## 3. Crossborder -> Drzwi
 
@@ -44,4 +44,4 @@ Nie ma wymagania podawania punktu nadawczego.
 | /products | collectionTypes | CROSSBORDER | [Pobranie produktów](../api/globkurier.md#/Products/productSearch) |
 | /products | deliveryTypes | PICKUP | [Pobranie produktów](../api/globkurier.md#/Products/productSearch) |
 
-Wymagany jest pointId - terminal dla crossborder (id pobieramy z endpoint dla kuriera [Get carrier datas (PL)](get-carrier-data.md))
+Produkty crossborder zwykle wymagają terminala nadawczego (`pointId`, z [Get carrier datas (PL)](get-carrier-data.md)). Czy punkt jest wymagany, zależy od produktu: sprawdź `senderAddressPointId` / `receiverAddressPointId` w [Get custom required fields](../api/globkurier.md#/Orders/orderGetCustomRequiredFields).

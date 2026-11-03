@@ -47,4 +47,8 @@ Aufgrund eines Fehlers sind mehrere Antworten des Systems möglich:
 | {"fields": {"shipment[integrationName]": "This offer is not available for given carrier."}} | Für den gewählten Kurier, die Versandart und die Zustellart gibt es keine Angebote |
 
 ## 6. Korrekte Antwort
-Nach der Implementierung
+
+- `onlyPricing = true`: `200` mit dem Preis des passenden Angebots.
+- Bestellung aufgegeben: `201` mit `number` (Bestellnummer), `hash` und `price`. Mit `createFully = true` enthält die Antwort außerdem `trackingNumber`, `pdfContent` (Etikett, Base64), `identifiers`, `formatContent` (Etikett in einem anderen Format als A4) und `returnPdfContent` (mit dem Zusatzservice `RETURN_SHIPMENT`).
+- `206`: Die Bestellung wurde aufgegeben, aber die synchrone Registrierung beim Versanddienstleister ist fehlgeschlagen; Inhalt wie bei `201` plus `error`.
+- Ohne `createFully` wird die Bestellung beim Versanddienstleister asynchron registriert.

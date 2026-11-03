@@ -30,7 +30,7 @@ To search for transport from a point (ATM/PUDO), use the offer search box:
 | /products | collectionTypes | POINT | [Get products](../api/globkurier.md#/Products/productSearch) |
 | /products | deliveryTypes | PICKUP | [Get products](../api/globkurier.md#/Products/productSearch) |
 
-There is no requirement to provide a shipping point.
+Whether a pickup point is required depends on the product: check `senderAddressPointId` / `receiverAddressPointId` in [Get custom required fields](../api/globkurier.md#/Orders/orderGetCustomRequiredFields).
 
 ## 3. Crossborder -> Doors
 
@@ -44,4 +44,4 @@ There is no requirement to provide a shipping point.
 | /products | collectionTypes | CROSSBORDER | [Get products](../api/globkurier.md#/Products/productSearch) |
 | /products | deliveryTypes | PICKUP | [Get products](../api/globkurier.md#/Products/productSearch) |
 
-PointId is required - crossborder terminal (ID is taken from the courier endpoint) [Get carrier datas (EN)](get-carrier-data.md))
+Crossborder products usually require the sender terminal (`pointId`, taken from [Get carrier datas (EN)](get-carrier-data.md)). Whether a pickup point is required depends on the product: check `senderAddressPointId` / `receiverAddressPointId` in [Get custom required fields](../api/globkurier.md#/Orders/orderGetCustomRequiredFields).

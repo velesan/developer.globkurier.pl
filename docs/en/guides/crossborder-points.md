@@ -3,7 +3,7 @@ title: Crossborder / Points
 ---
 
 ## Crossborder operation and points:
-### Wstęp
+### Introduction
 - Crossborder and PUDO point support is identical. 
 - Crossborder is available as long as the product is included in the customer's price list.
 - CollectionType in endpoint /products should contain an object with text CROSSBORDER or POINT:
@@ -28,7 +28,7 @@ title: Crossborder / Points
 
 
 ### Fast path ([Fast order Integration (EN)](fast-order-integration.md)):
-* the customer should be given the option to choose the category of additional services (a list can be created based on the endpoint) [Get available carrier list](../api/globkurier.md#/Carriers/carrierListR01))
+* the customer should be given the option to choose the category of additional services (a list can be created based on the endpoint [Get available carrier list](../api/globkurier.md#/Carriers/carrierListR01))
 * for valuation we use [Simplified order placement - new](../api/globkurier.md#/Orders/orderCreateBestPrice) with parameter onlyPricing = true and we give collectionType as CROSSBORDER
 * terminals / points can be downloaded via [Get shipment/receiving](../api/globkurier.md#/Points/pointGetList) for specific carriers
 * After correct/confirmed quote, you can place an order in the same way - onlyPricing = false, createFully = true

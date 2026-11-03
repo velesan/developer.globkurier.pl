@@ -2,8 +2,6 @@
 title: Introduction
 ---
 
-Vorherige Version der Dokumentation: https://api.globkurier.pl/v1/documentation
-
 ## 1. Erste Schritte
 Die GlobKurier API basiert auf der REST-Architektur. Antworten werden im JSON-Format zurückgegeben. Die Kommunikation mit dem Produktionsendpunkt ist SSL-verschlüsselt.
 
@@ -27,8 +25,9 @@ Die Sprache der API wird gewählt, indem in der Anfrage der Header accept-langua
 
 Aktuell unterstützte Sprachen:
 
-- pl
 - en (Standard)
+- pl
+- br, cn, cz, de, es, fr, pt, ru
 
 ## 3. Ressourcentypen
 Nach Autorisierung gibt es 3 Ressourcentypen:
@@ -262,7 +261,7 @@ Wenn Sie maximal 10 Datensätze pro Seite anzeigen möchten, fragen Sie für die
 
 ## 7. API-Antworten
 
-Die API verwendet die folgenden Antwortstatus ([RFC 2616](https://www.ietf.org/rfc/rfc2616.txt)):
+Die API verwendet die folgenden Antwortstatus ([RFC 9110](https://www.rfc-editor.org/rfc/rfc9110)):
 
 <table class="table table-striped table-bordered">
     <thead>

@@ -32,4 +32,4 @@ Als Antwort erhalten wir detaillierte Informationen zur Abrechnung der Bestellun
 | `addonsGrossPrice` | Bruttobetrag für Zusatzservices |
 | `discountNetPrice` | angewandter Rabattbetrag |
 | `packages[]` | Liste der Sendungsbestandteile. |
-| `addons[]` | Liste der Zusatzservices, die Netto- (price) und Bruttobeträge (proceGross) nach Berechnung des Rabatts ausweisen |
+| `addons[]` | Liste der Zusatzservices, die Netto- (price) und Bruttobeträge (priceGross) nach Berechnung des Rabatts ausweisen |

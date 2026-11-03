@@ -49,4 +49,8 @@ Istnieje kilka możliwych odpowiedzi systemu z powodu błędu:
 | {"fields": {"shipment[integrationName]": "This offer is not available for given carrier."}} | Nie ma żadnej oferty dla wybranego kuriera, typu nadania i typu dostawy |
 
 ## 6. Odpowiedź prawidłowa
-Po realizacji
+
+- `onlyPricing = true`: `200` z ceną dopasowanej oferty.
+- Zamówienie złożone: `201` z polami `number` (numer zamówienia), `hash` i `price`. Przy `createFully = true` odpowiedź zawiera też `trackingNumber`, `pdfContent` (etykieta, base64), `identifiers`, `formatContent` (etykieta w formacie innym niż A4) i `returnPdfContent` (z dodatkiem `RETURN_SHIPMENT`).
+- `206`: zamówienie złożone, ale synchroniczna rejestracja u przewoźnika się nie powiodła; treść jak przy `201` oraz pole `error`.
+- Bez `createFully` zamówienie jest rejestrowane u przewoźnika asynchronicznie.
