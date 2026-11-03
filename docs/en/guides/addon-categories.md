@@ -8,15 +8,15 @@ title: Addon categories
 | CAR_WITH_LIFT | Car with lift | "CAR_WITH_LIFT":{ "value": true} |
 | CAREFULLY | Handle with care: sensitive shipment | "CAREFULLY":{ "value": true} |
 | CARRY_PACKAGE | Carry in the package | "CARRY_PACKAGE":{ "value": true} |
-| CASH_ON_DELIVERY | Withdrawal (COD) | "CASH_ON_DELIVERY": {"value": 100, "bankAccountNumber": "PL5210................",            "name": "Name", "addressLine1": "Address line 1", "addressLine2": "Address line 2", "swiftCode":""} |
+| CASH_ON_DELIVERY | Cash on delivery (COD) | "CASH_ON_DELIVERY": {"value": 100, "bankAccountNumber": "PL5210................",            "name": "Name", "addressLine1": "Address line 1", "addressLine2": "Address line 2", "swiftCode":""} |
 | COMPLAINT_OF_SERVICE | Complaint about the service | "COMPLAINT_OF_SERVICE":{ "value": true} |
 | COURIER_WITH_LABEL | Courier brings with him the shipping documents | "COURIER_WITH_LABEL":{ "value": true} |
 | CUSTOMS_CLEARANCE | Customs | "CUSTOMS_CLEARANCE":{ "value": true} |
 | DECLARED_VALUE | Declared value of the shipment | "DECLARED_VALUE":{ "value": true} |
 | DELIVERY_BY_HAND | Personal delivery (DRW) | "DELIVERY_BY_HAND":{ "value": true} |
 | DELIVERY_GUARANTEED | Guaranteed delivery | "DELIVERY_GUARANTEED":{ "value": true} |
-| DUTY_DAP | Incoterms DDP (Tax and customs duties are payable by the recipient) | "DUTY_DAP":{ "value": true} |
-| DUTY_DDP_OUTER | Incoterms DDP (customer pays duty) | "DUTY_DDP_OUTER":{ "value": true} |
+| DUTY_DAP | Taxes and duties paid by the recipient (DAP) | "DUTY_DAP":{ "value": true} |
+| DUTY_DDP_OUTER | Taxes and duties paid by the sender (DDP, carrier account required) | "DUTY_DDP_OUTER":{ "value": true} |
 | DUTY_DDP_PREMIUM | Incoterms DDP (Tax and customs duties are paid by the sender - DDP Premium) | "DUTY_DDP_PREMIUM":{ "value": true} |
 | DUTY_DAP_PREMIUM | Incoterms DAP (Tax and duty paid by receiver - DAP Premium) | "DUTY_DAP_PREMIUM":{ "value": true} |
 | DUTY_DDP | Tax and duty paid by sender (DDP) | "DUTY_DDP":{ "value": true} |
@@ -28,7 +28,7 @@ title: Addon categories
 | FLUID_AND_GASES | Transportation of liquids or gases | "FLUID_AND_GASES":{ "value": true} |
 | FRAGILE | Transport fragile items | "FRAGILE":{ "value": true} |
 | FUMIGATION | Fumigation of the shipment | "FUMIGATION":{ "value": true} |
-| FURNITURE_ABOLITION | Abolittion the furniture | "FURNITURE_ABOLITION":{ "value": true} |
+| FURNITURE_ABOLITION | Carrying furniture down | "FURNITURE_ABOLITION":{ "value": true} |
 | FURNITURE_ASSEMBLY | Furniture assembly | "FURNITURE_ASSEMBLY":{ "value": true} |
 | FURNITURE_BRINGING | Bringing in furniture | "FURNITURE_BRINGING":{ "value": true} |
 | FURNITURE_TAKING_OLD | Taking away old furniture | "FURNITURE_TAKING_OLD":{ "value": true} |
@@ -46,7 +46,7 @@ title: Addon categories
 | NO_PALLET_SURCHARGE | Extra charge for missing pallet | "NO_PALLET_SURCHARGE":{ "value": true} |
 | NOON_DELIVERY | Delivery in the afternoon hours between 12-4pm | "NOON_DELIVERY":{ "value": true} |
 | NOT_STANDARD | Not standard element | "NOT_STANDARD":{ "value": true} |
-| OBJECTS_EASY_TO_CLEAN_AND_GLASS | ransportation of fragile objects and glass | "OBJECTS_EASY_TO_CLEAN_AND_GLASS":{ "value": true} |
+| OBJECTS_EASY_TO_CLEAN_AND_GLASS | Transport of fragile objects and glass | "OBJECTS_EASY_TO_CLEAN_AND_GLASS":{ "value": true} |
 | ORDER_BY_CUSTOMER_SERVICE_OFFICE | Order through the Customer Service Office | "ORDER_BY_CUSTOMER_SERVICE_OFFICE":{ "value": true} |
 | ORDERED_COURIER | I have already booked a courier | "ORDERED_COURIER":{ "value": true} |
 | PAID_PICKUP | I am ordering a courier pick-up | "PAID_PICKUP":{ "value": true} |

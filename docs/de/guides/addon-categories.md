@@ -15,8 +15,8 @@ title: Addon categories
 | DECLARED_VALUE | Deklarierter Wert der Sendung | "DECLARED_VALUE":{ "value": true} |
 | DELIVERY_BY_HAND | Persönliche Zustellung (DRW) | "DELIVERY_BY_HAND":{ "value": true} |
 | DELIVERY_GUARANTEED | Garantierte Zustellung | "DELIVERY_GUARANTEED":{ "value": true} |
-| DUTY_DAP | Incoterms DDP (Steuern und Zölle trägt der Empfänger) | "DUTY_DAP":{ "value": true} |
-| DUTY_DDP_OUTER | Incoterms DDP (der Kunde zahlt den Zoll) | "DUTY_DDP_OUTER":{ "value": true} |
+| DUTY_DAP | Steuern und Zoll zahlt der Empfänger (DAP) | "DUTY_DAP":{ "value": true} |
+| DUTY_DDP_OUTER | Steuern und Zoll zahlt der Absender (DDP, Kurierkonto erforderlich) | "DUTY_DDP_OUTER":{ "value": true} |
 | DUTY_DDP_PREMIUM | Incoterms DDP (Steuern und Zölle trägt der Absender - DDP Premium) | "DUTY_DDP_PREMIUM":{ "value": true} |
 | DUTY_DAP_PREMIUM | Incoterms DAP (Steuern und Zölle trägt der Empfänger - DAP Premium) | "DUTY_DAP_PREMIUM":{ "value": true} |
 | DUTY_DDP | Steuern und Zölle trägt der Absender (DDP) | "DUTY_DDP":{ "value": true} |
@@ -28,7 +28,7 @@ title: Addon categories
 | FLUID_AND_GASES | Transport von Flüssigkeiten oder Gasen | "FLUID_AND_GASES":{ "value": true} |
 | FRAGILE | Transport zerbrechlicher Gegenstände | "FRAGILE":{ "value": true} |
 | FUMIGATION | Begasung der Sendung | "FUMIGATION":{ "value": true} |
-| FURNITURE_ABOLITION | Beseitigung der Möbel | "FURNITURE_ABOLITION":{ "value": true} |
+| FURNITURE_ABOLITION | Heruntertragen von Möbeln | "FURNITURE_ABOLITION":{ "value": true} |
 | FURNITURE_ASSEMBLY | Möbelmontage | "FURNITURE_ASSEMBLY":{ "value": true} |
 | FURNITURE_BRINGING | Möbel hineintragen | "FURNITURE_BRINGING":{ "value": true} |
 | FURNITURE_TAKING_OLD | Alte Möbel abholen | "FURNITURE_TAKING_OLD":{ "value": true} |

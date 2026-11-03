@@ -32,4 +32,4 @@ In return, we will receive detailed information related to the settlement of the
 | `addonsGrossPrice` | gross amount for add-ons |
 | `discountNetPrice` | discount amount applied |
 | `packages[]` | List of shipment components. |
-| `addons[]` | List of add-ons that present net (price) and gross (proceGross) amounts after calculating the discount |
+| `addons[]` | List of add-ons that present net (price) and gross (priceGross) amounts after calculating the discount |

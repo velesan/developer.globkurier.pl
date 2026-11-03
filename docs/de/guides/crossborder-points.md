@@ -28,7 +28,7 @@ title: Crossborder / Points
 
 
 ### Schneller Pfad ([Fast order Integration (DE)](fast-order-integration.md)):
-* dem Kunden sollte die Möglichkeit gegeben werden, die Kategorie der Zusatzservices auszuwählen (eine Liste kann auf Basis des Endpunkts erstellt werden) [Get available carrier list](../api/globkurier.md#/Carriers/carrierListR01))
+* dem Kunden sollte die Möglichkeit gegeben werden, die Kategorie der Zusatzservices auszuwählen (eine Liste kann auf Basis des Endpunkts [Get available carrier list](../api/globkurier.md#/Carriers/carrierListR01) erstellt werden)
 * für die Preisermittlung verwenden wir [Simplified order placement - new](../api/globkurier.md#/Orders/orderCreateBestPrice) mit dem Parameter onlyPricing = true und geben collectionType als CROSSBORDER an
 * Terminals / Punkte können für bestimmte Carrier über [Get shipment/receiving](../api/globkurier.md#/Points/pointGetList) abgerufen werden
 * Nach korrekter/bestätigter Preisermittlung kann die Bestellung auf dieselbe Weise aufgegeben werden - onlyPricing = false, createFully = true

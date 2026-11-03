@@ -43,7 +43,7 @@ Z odpowiedzi pobieramy ID produktu, który chcemy zamówić. Odpowiedź zawiera 
 Po wybraniu produktu należy pobrać cały słownik dodatków dostępnych dla produktu (endpoint: [Get addons for product](../api/globkurier.md#/Products/productGetAddons)) przekazując parametry:
 
 - id produktu: `productId`
-- te same gabaryty, wymiary i ilość paczek jak dla wyszukania produktu (system przeliczy odpowiednie kwoty dodatków)
+- te same wymiary (długość, szerokość, wysokość), waga i liczba paczek (quantity) jak dla wyszukania produktu (system przeliczy odpowiednie kwoty dodatków)
 - te same id kraju z którego i do którego wysyłamy oraz kody pocztowe (system dopasuje i przeliczy odpowiednie kwoty dodatków)
 - opcjonalnie można dodać paramety COD i ubezpieczenia w celu dobrania odpowiedniego dodatku i kwoty do poziomu wartości COD i ubezpieczenia
 
@@ -62,7 +62,7 @@ Odpowiedź zawiera kluczowe informacje:
 - czy ubezpieczenie jest wymagane: `insuranceRequired`
 - dla COD - ilość dni na zwrot: `daysToReturn`
 
-## 7. Płatność
+## 6. Płatność
 Sugerujemy wykorzystanie płatności prepaid (wcześniejsze wpłaty na koncie Globkurier) - id = 3
 W innym wypadku należy wykonać integrację metod płatności (np. online):
 
@@ -75,15 +75,15 @@ W innym wypadku należy wykonać integrację metod płatności (np. online):
 
 - płatność inna niż prepaid musi zostać wywołana po złożeniu zamówienia
 
-## 8. Częściowa i pełna walidacja danych
+## 7. Częściowa i pełna walidacja danych
 Na każdym etapie zbierania danych do złożenia zamówienia można weryfikować poprawność danych (np. po pobraniu danych adresowych). 
 Oszczędza to czas klientowi przy próbie składania zamówienia z poprawianiem danych.
 Endpoint: [Partial order validation](../api/globkurier.md#/Order%20Management/orderValidate)
 
-## 9. Podsumowanie kwot
+## 8. Podsumowanie kwot
 Dla wszystkich zebranych danych można pobrać podsumowanie kwot ([Pricing Summary before ordering (PL)](pricing-summary-before-ordering.md))
 
-## 10. Złożenie zamówienia
+## 9. Złożenie zamówienia
 Po przejściu walidacji wszystkich danych, po potwierdzeniu przez użytkownika wszystkich podsumowań można stworzyć zamówienie w systemie. 
 Endpoint [Create order](../api/globkurier.md#/Orders/orderCreate):
 Kluczowe elementy wysyłane w body:
@@ -97,13 +97,14 @@ Kluczowe elementy wysyłane w body:
     - `pointId` - kod punktu / PUDO / terminala , w którym nastąpi odebranie przesyłki (jeżeli wybrany produkt, tego dotyczy) - obowiązkowo.
 - W sekcji ogólnej:
     - `content` - zawartość przesyłki
-    - `paymentId` - metoda płatności (dla prepaid: id=3 lub id=9) przesyłka zostanie opłacona od razu i wyegenrowany zostanie list przewozowy, dla id=2 - online - należy dokonać integracji płatności - pkt 7)
+    - `paymentId` - metoda płatności (dla prepaid: id=3 lub id=9) przesyłka zostanie opłacona od razu i wygenerowany zostanie list przewozowy, dla id=2 - online - należy dokonać integracji płatności - pkt 6)
     - `agreements` - wymagane jest przesłanie zgód na realizację zamówienia. Aktualnie wymagane zgody można pobrać za pomocą endpoint: [Get agreements](../api/globkurier.md#/Agreements/agreementListR01) dla parametru filters[module] = order np.
 
         ```json
-        "receiveElectronicBills": true,
-        "processingPersonalData": true
-        },
+        "agreements": {
+            "receiveElectronicBills": true,
+            "processingPersonalData": true
+        }
         ```
 
     - w sekcji addons dokładnie te same usługi dodatkowe jak przy wycenie. Kluczowe są id usług dodatkowych. 
@@ -130,9 +131,9 @@ Kluczowe elementy wysyłane w body:
     - `collectionType`, `deliveryType` - typ nadania i odbioru
     - `referenceNumber` - numer zamówienia systemu klienta
 
-## 11. Odpowiedź po złożeniu zamówienia
+## 10. Odpowiedź po złożeniu zamówienia
 Po wygenerowaniu zamówienia w odpowiedzi znajdzie sie informacja o orderNumber i hash zamówienia. Numery wykorzystywane dalszego procesowania. 
 
-## 12. Pobranie etykiety [Labels (PL)](labels.md)
+## 11. Pobranie etykiety [Labels (PL)](labels.md)
 
-## 13. Statusy przesyłki [Tracking (PL)](tracking.md)
+## 12. Statusy przesyłki [Tracking (PL)](tracking.md)

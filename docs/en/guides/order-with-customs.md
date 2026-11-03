@@ -5,10 +5,10 @@ title: Order with customs
 When ordering a shipment via the [Simplified order placement (bestprice)](../api/globkurier.md#/Orders/orderCreateBestPrice) or [Create order](../api/globkurier.md#/Orders/orderCreate) endpoint for exports of goods outside the EU, you can use electronic customs clearance. 
 
 The customs section in the request is used for this. 
-The fields and structure are dynamic and may differ for each carrier. Retrieve the information about required fields from [/customsRequiredFields](../api/globkurier.md#/Orders/orderGetCustomRequiredFields)
-Retrieve the list of fields from [/customs/config](../api/globkurier.md#/Customs/customsGetDeclarationConfigR01) 
+The fields and structure are dynamic and may differ for each carrier. Retrieve the information about required fields from [/order/customRequiredFields](../api/globkurier.md#/Orders/orderGetCustomRequiredFields)
+Retrieve the list of fields from [/customs/config](../api/globkurier.md#/Customs/customsGetDeclarationConfigR01) (parameters: `productId` or `name`, `senderCountry`, `receiverCountry`).
 
-The endpoint requires the following parameters: 
+`/order/customRequiredFields` requires the following parameters:
 
 - `productId` - Product identifier retrieved with the [/products](../api/globkurier.md#/Products/productSearch) resource
 - `senderCountryId` and `receiverCountryId` - Sender/receiver country identifier retrieved with the [/countries](../api/globkurier.md#/Countries/countryListR01) resource

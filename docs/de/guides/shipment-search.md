@@ -30,7 +30,7 @@ Um nach Transporten von einem Punkt (Automat/PUDO) zu suchen, verwenden Sie das 
 | /products | collectionTypes | POINT | [Get products](../api/globkurier.md#/Products/productSearch) |
 | /products | deliveryTypes | PICKUP | [Get products](../api/globkurier.md#/Products/productSearch) |
 
-Die Angabe eines Versandpunkts ist nicht erforderlich.
+Ob ein Paketpunkt erforderlich ist, hängt vom Produkt ab: prüfen Sie `senderAddressPointId` / `receiverAddressPointId` in [Get custom required fields](../api/globkurier.md#/Orders/orderGetCustomRequiredFields).
 
 ## 3. Crossborder -> Türen
 
@@ -44,4 +44,4 @@ Die Angabe eines Versandpunkts ist nicht erforderlich.
 | /products | collectionTypes | CROSSBORDER | [Get products](../api/globkurier.md#/Products/productSearch) |
 | /products | deliveryTypes | PICKUP | [Get products](../api/globkurier.md#/Products/productSearch) |
 
-PointId ist erforderlich - Crossborder-Terminal (die ID wird aus dem Carrier-Endpunkt entnommen) [Get carrier datas (DE)](get-carrier-data.md))
+Crossborder-Produkte erfordern in der Regel das Absender-Terminal (`pointId`, aus [Get carrier datas (DE)](get-carrier-data.md)). Ob ein Paketpunkt erforderlich ist, hängt vom Produkt ab: prüfen Sie `senderAddressPointId` / `receiverAddressPointId` in [Get custom required fields](../api/globkurier.md#/Orders/orderGetCustomRequiredFields).

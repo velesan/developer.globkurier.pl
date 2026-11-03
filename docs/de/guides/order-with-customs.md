@@ -5,10 +5,10 @@ title: Order with customs
 Bei der Bestellung einer Sendung über den Endpunkt [Simplified order placement (bestprice)](../api/globkurier.md#/Orders/orderCreateBestPrice) oder [Create order](../api/globkurier.md#/Orders/orderCreate) kann für die Ausfuhr von Waren außerhalb der EU die elektronische Zollabfertigung genutzt werden. 
 
 Dafür dient der Abschnitt customs in der Anfrage (request). 
-Die Felder und die Struktur sind dynamisch und können für jeden Carrier unterschiedlich sein. Die Informationen zu den erforderlichen Feldern sind über [/customsRequiredFields](../api/globkurier.md#/Orders/orderGetCustomRequiredFields) abzurufen
-Die Liste der Felder ist über [/customs/config](../api/globkurier.md#/Customs/customsGetDeclarationConfigR01) abzurufen 
+Die Felder und die Struktur sind dynamisch und können für jeden Carrier unterschiedlich sein. Die Informationen zu den erforderlichen Feldern sind über [/order/customRequiredFields](../api/globkurier.md#/Orders/orderGetCustomRequiredFields) abzurufen
+Die Liste der Felder ist über [/customs/config](../api/globkurier.md#/Customs/customsGetDeclarationConfigR01) abzurufen (Parameter: `productId` oder `name`, `senderCountry`, `receiverCountry`).
 
-Der Endpunkt erfordert die folgenden Parameter: 
+`/order/customRequiredFields` erfordert die folgenden Parameter:
 
 - `productId` - Produktkennung, abgerufen mit der Ressource [/products](../api/globkurier.md#/Products/productSearch)
 - `senderCountryId` und `receiverCountryId` - Kennung des Absender-/Empfängerlandes, abgerufen mit der Ressource [/countries](../api/globkurier.md#/Countries/countryListR01)

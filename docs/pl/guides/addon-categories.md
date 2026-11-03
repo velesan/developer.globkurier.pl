@@ -15,8 +15,8 @@ title: Addon categories
 | DECLARED_VALUE | Deklarowana wartość przesyłki | "DECLARED_VALUE":{ "value": true} |
 | DELIVERY_BY_HAND | Doręczenie do rąk własnych (DRW) | "DELIVERY_BY_HAND":{ "value": true} |
 | DELIVERY_GUARANTEED | Doręczenie gwarantowane | "DELIVERY_GUARANTEED":{ "value": true} |
-| DUTY_DAP | Incoterms DDP (Podatek i cło opłaca odbiorca) | "DUTY_DAP":{ "value": true} |
-| DUTY_DDP_OUTER | Incoterms DDP (cło opłaca klient) | "DUTY_DDP_OUTER":{ "value": true} |
+| DUTY_DAP | Podatek i cło opłaca odbiorca (DAP) | "DUTY_DAP":{ "value": true} |
+| DUTY_DDP_OUTER | Podatek i cło opłaca nadawca (DDP, wymagane konto kuriera) | "DUTY_DDP_OUTER":{ "value": true} |
 | DUTY_DDP_PREMIUM | Incoterms DDP (Podatek i cło opłaca nadawca - DDP Premium) | "DUTY_DDP_PREMIUM":{ "value": true} |
 | DUTY_DAP_PREMIUM | Incoterms DAP (Podatek i cło opłaca odbiorca - DAP Premium) | "DUTY_DAP_PREMIUM":{ "value": true} |
 | DUTY_DDP | Podatek i cło opłaca nadawca (DDP) | "DUTY_DDP":{ "value": true} |
@@ -46,7 +46,7 @@ title: Addon categories
 | NO_PALLET_SURCHARGE | Dopłata za brak palety | "NO_PALLET_SURCHARGE":{ "value": true} |
 | NOON_DELIVERY | Doręczenie w godzinach południowych 12-16 | "NOON_DELIVERY":{ "value": true} |
 | NOT_STANDARD | Element niestandardowy | "NOT_STANDARD":{ "value": true} |
-| OBJECTS_EASY_TO_CLEAN_AND_GLASS | Przewóz objektów kruchych i szkła | "OBJECTS_EASY_TO_CLEAN_AND_GLASS":{ "value": true} |
+| OBJECTS_EASY_TO_CLEAN_AND_GLASS | Przewóz obiektów kruchych i szkła | "OBJECTS_EASY_TO_CLEAN_AND_GLASS":{ "value": true} |
 | ORDER_BY_CUSTOMER_SERVICE_OFFICE | Zlecenie poprzez Biuro Obsługi Klienta | "ORDER_BY_CUSTOMER_SERVICE_OFFICE":{ "value": true} |
 | ORDERED_COURIER | Mam już zamówionego kuriera | "ORDERED_COURIER":{ "value": true} |
 | PAID_PICKUP | Zamawiam podjazd kuriera | "PAID_PICKUP":{ "value": true} |

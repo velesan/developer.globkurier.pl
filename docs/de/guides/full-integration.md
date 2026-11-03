@@ -43,7 +43,7 @@ Aus der Antwort entnehmen wir die ID des Produkts, das wir bestellen möchten. D
 Nach der Auswahl des Produkts müssen Sie das gesamte Verzeichnis der für das Produkt verfügbaren Zusatzservices abrufen (Endpunkt: [Get addons for product](../api/globkurier.md#/Products/productGetAddons)) und dabei folgende Parameter übergeben:
 
 - Produkt-ID: `productId`
-- dieselben Abmessungen, Maße und dieselbe Anzahl der Pakete wie bei der Produktsuche (das System berechnet die entsprechenden Zuschlagsbeträge)
+- dieselben Abmessungen (Länge, Breite, Höhe), dasselbe Gewicht und dieselbe Anzahl der Pakete (quantity) wie bei der Produktsuche (das System berechnet die entsprechenden Zuschlagsbeträge)
 - dieselben Länder-IDs und Postleitzahlen (das System passt die entsprechenden Zuschlagsbeträge an und berechnet sie)
 - optional können Sie COD- und Versicherungsparameter hinzufügen, um den passenden Zuschlag und Betrag passend zum COD- und Versicherungswert auszuwählen
 
@@ -63,7 +63,7 @@ Die Antwort enthält wesentliche Informationen:
 - ob eine Versicherung erforderlich ist: `insuranceRequired`
 - bei COD - Anzahl der Tage für die Rückzahlung: `daysToReturn`
 
-## 7. Zahlung
+## 6. Zahlung
 Wir empfehlen die Verwendung von Prepaid-Zahlungen (frühere Einzahlungen auf Ihr Globkurier-Konto) - id = 3.
 Andernfalls müssen Sie Zahlungsmethoden (z. B. online) integrieren:
 
@@ -76,15 +76,15 @@ Andernfalls müssen Sie Zahlungsmethoden (z. B. online) integrieren:
 
 - eine andere Zahlung als Prepaid muss nach Aufgabe der Bestellung erfolgen
 
-## 8. Teil- und vollständige Datenvalidierung
+## 7. Teil- und vollständige Datenvalidierung
 In jeder Phase der Datenerfassung für die Bestellung können Sie die Richtigkeit der Daten überprüfen (z. B. nach Erfassung der Adressdaten). 
 Das spart dem Kunden Zeit beim Versuch, eine Bestellung aufzugeben und Daten zu korrigieren.
 Endpunkt: [Partial order validation](../api/globkurier.md#/Order%20Management/orderValidate)
 
-## 9. Zusammenfassung der Beträge
+## 8. Zusammenfassung der Beträge
 Sie können eine Zusammenfassung der Beträge für alle erfassten Daten abrufen ([Pricing Summary before ordering (DE)](pricing-summary-before-ordering.md))
 
-## 10. Aufgabe einer Bestellung
+## 9. Aufgabe einer Bestellung
 Sobald alle Daten validiert wurden und der Benutzer alle Zusammenfassungen bestätigt hat, kann im System eine Bestellung erstellt werden.
 Endpunkt [Create order](../api/globkurier.md#/Orders/orderCreate):
 Wesentliche Elemente, die im body gesendet werden:
@@ -98,13 +98,14 @@ Wesentliche Elemente, die im body gesendet werden:
     - `pointId` - Code des Punkts / PUDO / Terminals, an dem die Sendung abgeholt wird (falls für das gewählte Produkt zutreffend) - obligatorisch.
 - im allgemeinen Abschnitt:
     - `content` - Inhalt der Sendung
-    - `paymentId` - Zahlungsmethode (bei Prepaid: id=3 oder id=9) die Sendung wird sofort bezahlt und ein Frachtbrief erzeugt, bei id=2 - online - die Zahlungsintegration muss abgeschlossen sein - Punkt 7)
+    - `paymentId` - Zahlungsmethode (bei Prepaid: id=3 oder id=9) die Sendung wird sofort bezahlt und ein Frachtbrief erzeugt, bei id=2 - online - die Zahlungsintegration muss abgeschlossen sein - Punkt 6)
     - `agreements` - für die Bearbeitung der Bestellung sind Einwilligungen erforderlich. Die aktuell erforderlichen Einwilligungen können über den Endpunkt abgerufen werden: [Get agreements](../api/globkurier.md#/Agreements/agreementListR01) für den Parameter filters[module] = order z. B.
 
         ```json
-        "receiveElectronicBills": true,
-        "processingPersonalData": true
-        },
+        "agreements": {
+            "receiveElectronicBills": true,
+            "processingPersonalData": true
+        }
         ```
 
     - im Abschnitt addons genau dieselben Zusatzservices wie in der Preisermittlung. Die IDs der Zusatzservices sind entscheidend. 
@@ -131,9 +132,9 @@ Wesentliche Elemente, die im body gesendet werden:
     - `collectionType`, `deliveryType` - Art des Versands und des Empfangs
     - `referenceNumber` - Bestellnummer im System des Kunden
 
-## 11. Antwort nach Aufgabe einer Bestellung
+## 10. Antwort nach Aufgabe einer Bestellung
 Nach der Erzeugung der Bestellung enthält die Antwort Informationen zur Bestellnummer und zum Bestell-Hash. Diese Nummern werden für die weitere Bearbeitung verwendet.
 
-## 12. Etikett abrufen [Labels (DE)](labels.md)
+## 11. Etikett abrufen [Labels (DE)](labels.md)
 
-## 13. Tracking-Status [Tracking (DE)](tracking.md)
+## 12. Tracking-Status [Tracking (DE)](tracking.md)

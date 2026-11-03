@@ -5,10 +5,10 @@ title: Order with customs
 Przy zamawianiu przesyłki poprzez endpoint [Simplified order placement (bestprice)](../api/globkurier.md#/Orders/orderCreateBestPrice) lub [Create order](../api/globkurier.md#/Orders/orderCreate) dla wywozu towarów poza UE można skorzystać z elektronicznej odprawy celnej. 
 
 Służy do tego sekcja customs w request. 
-Pola i struktura są dynamiczne i dla każdego przewoźnika mogą być inne. Informację o wymaganych polach należy pobrać [/customsRequiredFields](../api/globkurier.md#/Orders/orderGetCustomRequiredFields)
-Listę pól należy pobrać  [/customs/config](../api/globkurier.md#/Customs/customsGetDeclarationConfigR01) 
+Pola i struktura są dynamiczne i dla każdego przewoźnika mogą być inne. Informację o wymaganych polach należy pobrać z [/order/customRequiredFields](../api/globkurier.md#/Orders/orderGetCustomRequiredFields)
+Listę pól należy pobrać z [/customs/config](../api/globkurier.md#/Customs/customsGetDeclarationConfigR01) (parametry: `productId` albo `name`, `senderCountry`, `receiverCountry`).
 
-Endpoint wymaga podania parametrów: 
+`/order/customRequiredFields` wymaga podania parametrów:
 
 - `productId` - Identyfikator produktu pobrany za pomocą zasobu [/products](../api/globkurier.md#/Products/productSearch)
 - `senderCountryId`  oraz `receiverCountryId` - Identyfikator kraju nadawcy/odbiorcy pobrany za pomocą zasobu [/countries](../api/globkurier.md#/Countries/countryListR01)

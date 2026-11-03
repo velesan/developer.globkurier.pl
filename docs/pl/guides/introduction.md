@@ -2,8 +2,6 @@
 title: Introduction
 ---
 
-Poprzednia wersja dokumentacji: https://api.globkurier.pl/v1/documentation
-
 ## 1. Rozpoczęcie pracy
 API GlobKurier jest oparte o architekturę REST. Odpowiedź zwracana jest w formacie JSON. Komunikacja z produkcyjną końcówką jest szyfrowana w SSL.
 
@@ -27,8 +25,9 @@ Język API wybieramy przesyłając w nagłówku żądania `accept-language` kodu
 
 Obecnie wspierane języki:
 
-- pl
 - en (domyślny)
+- pl
+- br, cn, cz, de, es, fr, pt, ru
 
 ## 3. Typy zasobów
 Wyróżniamy 3 typy zasobów ze względu na autoryzację:
@@ -264,7 +263,7 @@ Wszystkie zasoby, w których występuje możliwość sterowania paginacją opier
 ### Przykład paginacji
 Jeśli chcemy wyświetlić masymalnie 10 pozycji na stronie, aby wyświetlić pierwszą stronę odpytujemy API ustawiając `offset` = 0 oraz `limit` = 10. Zwrotnie otrzymujemy informację, że wszystkich wyników total jest 126. Wiemy, że przy dziesięciu wynikach na stronie, mamy 13 stron wyników (ostatnia zawiera 6 pozycji). Aby wyświetlić drugą stronę odpytujemy API ustawiając `offset` = 10 oraz `limit` = 10.
 ## 7. Odpowiedzi API
-API korzysta z następujących statusów odpowiedzi ([RFC 2616](https://www.ietf.org/rfc/rfc2616.txt)):
+API korzysta z następujących statusów odpowiedzi ([RFC 9110](https://www.rfc-editor.org/rfc/rfc9110)):
 
 <table class="table table-striped table-bordered">
     <thead>

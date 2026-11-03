@@ -43,7 +43,7 @@ From the response, we retrieve the ID of the product we want to order. The respo
 After selecting the product, you need to download the entire dictionary of add-ons available for the product (endpoint: [Get addons for product](../api/globkurier.md#/Products/productGetAddons)) passing parameters:
 
 - product ID: `productId`
-- the same dimensions, dimensions, and number of packages as for the product search (the system will calculate the appropriate surcharge amounts)
+- the same dimensions (length, width, height), weight and number of packages (quantity) as for the product search (the system will calculate the appropriate surcharge amounts)
 - the same country IDs and postal codes (the system will adjust and calculate the appropriate surcharge amounts)
 - optionally, you can add COD and insurance parameters to select the appropriate surcharge and amount to match the COD and insurance values
 
@@ -63,7 +63,7 @@ The response contains key information:
 - whether insurance is required: `insuranceRequired`
 - for COD - number of days for return: `daysToReturn`
 
-## 7. Payment
+## 6. Payment
 We suggest using prepaid payments (earlier payments on your Globkurier account) - id = 3.
 Otherwise, you must integrate payment methods (e.g. online):
 
@@ -76,15 +76,15 @@ Otherwise, you must integrate payment methods (e.g. online):
 
 - payment other than prepaid must be made after the order is placed
 
-## 8. Partial and full data validation
+## 7. Partial and full data validation
 At each stage of collecting data for placing an order, you can verify the accuracy of the data (e.g. after collecting address data). 
 This saves the customer time when trying to place an order and correcting data.
 Endpoint: [Partial order validation](../api/globkurier.md#/Order%20Management/orderValidate)
 
-## 9. Summarized amounts
+## 8. Summarized amounts
 You can download a summary of the amounts for all collected data ([Pricing Summary before ordering (EN)](pricing-summary-before-ordering.md))
 
-## 10. Placing an order
+## 9. Placing an order
 Once all data has been validated and the user has confirmed all the summaries, an order can be created in the system.
 Endpoint [Create order](../api/globkurier.md#/Orders/orderCreate):
 Key elements sent in the body:
@@ -98,13 +98,14 @@ Key elements sent in the body:
     - `pointId` - code of the point / PUDO / terminal where the shipment will be collected (if applicable for the selected product) - mandatory.
 - in the general section:
     - `content` - contents of the shipment
-    - `paymentId` - payment method (for prepaid: id=3 or id=9) the shipment will be paid immediately and a waybill will be generated, for id=2 - online - payment integration must be completed - point 7)
+    - `paymentId` - payment method (for prepaid: id=3 or id=9) the shipment will be paid immediately and a waybill will be generated, for id=2 - online - payment integration must be completed - point 6)
     - `agreements` - consents are required to process the order. Currently required consents can be retrieved via the endpoint.: [Get agreements](../api/globkurier.md#/Agreements/agreementListR01) for the filters parameter[module] = order e.g.
 
         ```json
-        "receiveElectronicBills": true,
-        "processingPersonalData": true
-        },
+        "agreements": {
+            "receiveElectronicBills": true,
+            "processingPersonalData": true
+        }
         ```
 
     - in the addons section exactly the same additional services as in the quote. The IDs of additional services are crucial. 
@@ -131,9 +132,9 @@ Key elements sent in the body:
     - `collectionType`, `deliveryType` - type of sending and receiving
     - `referenceNumber` - customer system order number
 
-## 11. Response after placing an order
+## 10. Response after placing an order
 After generating the order, the response will contain information about the order number and the order hash. These numbers are used for further processing.
 
-## 12. Get the label [Labels (EN)](labels.md)
+## 11. Get the label [Labels (EN)](labels.md)
 
-## 13. Tracking statuses [Tracking (EN)](tracking.md)
+## 12. Tracking statuses [Tracking (EN)](tracking.md)

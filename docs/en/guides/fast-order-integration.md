@@ -47,4 +47,8 @@ There are several possible system responses due to the error:
 | {"fields": {"shipment[integrationName]": "This offer is not available for given carrier."}} | There are no offers for the selected courier, shipping type and delivery type |
 
 ## 6. Correct answer
-After implementation
+
+- `onlyPricing = true`: `200` with the price of the matched offer.
+- Order placed: `201` with `number` (order number), `hash` and `price`. With `createFully = true` the response also contains `trackingNumber`, `pdfContent` (label, base64), `identifiers`, `formatContent` (label in a format other than A4) and `returnPdfContent` (with the `RETURN_SHIPMENT` add-on).
+- `206`: the order was placed, but the synchronous registration with the carrier failed; the body is the same as for `201` plus `error`.
+- Without `createFully` the order is registered with the carrier asynchronously.
