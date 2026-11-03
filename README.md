@@ -43,9 +43,12 @@ Open <http://localhost:8000> (Polish: `/pl/`, German: `/de/`).
   spaces in the tag as `%20`.
 - **API**: put the spec in `docs/specs/`, add `docs/<lang>/api/<name>.md` with `template: api.html` and `spec:`, add it under
   `API reference` in `nav`.
-- **API changelog**: publish a GitHub Release (tag e.g. `api-2026-11-03`, notes in English). The changelog page loads
-  releases in the browser (`docs/assets/releases.js`), so no portal rebuild is needed; pre-releases are hidden.
-  Describe contract changes only (endpoints, fields, statuses), no ticket numbers or internal names.
+- **Changelog (product releases)**: every release planned as a Jira version (the whole team, all repos) is published
+  here, and only here, as a GitHub Release tagged `YYYY.WW.N` — ISO year and week of the release date plus a running
+  number within the week (e.g. `2026.45.1`), with `--title` equal to the tag and English notes for customers.
+  Technical `prod-*` / `release-*` releases stay in their own repositories. The changelog page loads releases in the
+  browser (`docs/assets/releases.js`), so no portal rebuild is needed; pre-releases are hidden. Describe changes for
+  customers (API contract: endpoints, fields, statuses), no ticket numbers, internal names, e-mails or IPs.
 
 ## Spec updates
 
