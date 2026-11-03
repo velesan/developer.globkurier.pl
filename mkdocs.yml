@@ -1,5 +1,7 @@
 site_name: GlobKurier Developers
-site_url: https://developer.globkurier.pl/
+# The i18n language switcher on home pages links by site_url path, so CI passes the real Pages address
+# (github.io/<repo>/ until the custom domain is set).
+site_url: !ENV [SITE_URL, 'https://developer.globkurier.pl/']
 site_description: GlobKurier API documentation, integration guides and API changelog.
 repo_url: https://github.com/velesan/developer.globkurier.pl
 repo_name: velesan/developer.globkurier.pl
