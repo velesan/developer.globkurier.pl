@@ -1,0 +1,9 @@
+/site/
+/.venv/
+/import-report.md
+__pycache__/
+.env*
+# Apidog exports contain internal modules; never commit them (CI also fails on such files).
+*apidog*.json
+*apidog*.zip
+/GlobKurier*.json
