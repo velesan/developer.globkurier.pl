@@ -2,8 +2,8 @@
 title: Crossborder / Points
 ---
 
-# Działanie crossborder i punkty:
-#### Wstęp
+## Działanie crossborder i punkty:
+### Wstęp
 - Obsługa crossborder i punktów PUDO jest identyczna. 
 - Crossborder jest dostepny o ile dany produkt występuje w cenniku dla klienta.
 - CollectionType w endpoint /products powinien zawierać obiekt z tekstem CROSSBORDER lub POINT:
@@ -11,14 +11,14 @@ title: Crossborder / Points
 - w momencie wybrania tego produktu, miejsca nadania pobieramy poprzez endpoint /points dla `productId` = wybrany produkt wraz z pozostałymi parametrami - otrzymamy listę terminali / punktów. Alternatywnie zamiast `productId` można podać kod przewoźnika i otrzymamy pełną listę punktów ([Get carrier datas (PL)](get-carrier-data.md))
 - wybrany terminal (id) / punkt (id) wstawiamy jako pointId w sekcji senderAddress.
 
-#### Kurierzy dla Crossborder:
+### Kurierzy dla Crossborder:
 * DHL DE
 * Balikovna
 * POST NORD DIRECT LINK
 * Royal Mail
 * Spring
 
-#### Dla pełnej integracji:
+### Dla pełnej integracji:
 * /products - produkty dla kryteriów 
 * /products/addons  - dodatki do wybranego produktu
 * /points -> pobranie punktów dla produktu crossborder/point
@@ -27,17 +27,19 @@ title: Crossborder / Points
 * /order - zamawianie
 
 
-#### Szybka ścieżka ([Fast order Integration (PL)](fast-order-integration.md)):
+### Szybka ścieżka ([Fast order Integration (PL)](fast-order-integration.md)):
 * należy udostępnić klientowi wybór kategorii usług dodatkowych (można listę stworzyć na podstawie endpointu [Get available carrier list](../api/globkurier.md#/Carriers/carrierListR01))
 * dla wyceny wykorzystujemy [Simplified order placement - new](../api/globkurier.md#/Orders/orderCreateBestPrice) z parametrem onlyPricing = true i dajemy collectionType jako CROSSBORDER
 * terminale / punkty można pobrać poprzez [Get shipment/receiving](../api/globkurier.md#/Points/pointGetList) dla konkretnych przewoźników
 * Po poprawnej / potwierdzeniu wyceny można złożyć zamówienie w identyczny sposób - onlyPricing = false, createFully = true
 
-#### Przykład
+### Przykład
 
 .../v1/order/bestPrice?onlyPricing=true&createFully=false
 
 Body Type : application/json
+
+```json
 {
     "shipment": {
         "length": 10,
@@ -78,3 +80,4 @@ Body Type : application/json
         "INSURANCE": {"value":50}
     }     
 }
+```

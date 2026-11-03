@@ -9,10 +9,11 @@ The fields and structure are dynamic and may differ for each carrier. Retrieve t
 Retrieve the list of fields from [/customs/config](../api/globkurier.md#/Customs/customsGetDeclarationConfigR01) 
 
 The endpoint requires the following parameters: 
+
 - `productId` - Product identifier retrieved with the [/products](../api/globkurier.md#/Products/productSearch) resource
 - `senderCountryId` and `receiverCountryId` - Sender/receiver country identifier retrieved with the [/countries](../api/globkurier.md#/Countries/countryListR01) resource
 - `collectionType` - Collection type (PICKUP, POINT, CROSSBORDER)
- 	
+
 Based on this, you can prepare the "customs" section. Example:
 
 

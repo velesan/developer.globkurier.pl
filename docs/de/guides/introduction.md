@@ -4,7 +4,7 @@ title: Introduction
 
 Vorherige Version der Dokumentation: https://api.globkurier.pl/v1/documentation
 
-### 1. Erste Schritte
+## 1. Erste Schritte
 Die GlobKurier API basiert auf der REST-Architektur. Antworten werden im JSON-Format zurückgegeben. Die Kommunikation mit dem Produktionsendpunkt ist SSL-verschlüsselt.
 
 Die Umgebungen sind getrennt. Um die Test-API zu nutzen, benötigen Sie ein Benutzerkonto der Produktionsumgebung, wobei seit der Registrierung oder der Aktualisierung des Profils mindestens ein Tag vergangen sein muss (Propagierungszeit in die Testumgebung). Testdaten werden am Ende des Tages gelöscht.
@@ -22,31 +22,32 @@ Test-URL:
 https://test.api.globkurier.pl/v1
 ```
 
-### 2. Sprachversionen
+## 2. Sprachversionen
 Die Sprache der API wird gewählt, indem in der Anfrage der Header accept-language mit einem ISO-639-1-Sprachcode gesendet wird.
 
 Aktuell unterstützte Sprachen:
+
 - pl
 - en (Standard)
 
-### 3. Ressourcentypen
+## 3. Ressourcentypen
 Nach Autorisierung gibt es 3 Ressourcentypen:
 
 - keine Autorisierung erforderlich (z. B. Abruf der Länderliste)
 - optionale Autorisierung (z. B. Produktsuche, die für Gäste und angemeldete Benutzer unterschiedliche Produkte liefert) – in der Dokumentation mit einem Filtersymbol gekennzeichnet
 - Autorisierung per Token erforderlich
 
-### 4. Ressourcenerkennung
+## 4. Ressourcenerkennung
 Sie können die verfügbaren Methoden abrufen, indem Sie eine beliebige Ressource mit der HTTP-Methode OPTIONS abfragen. Die Antwort enthält die folgenden Header:
 
-`Access-Control-Allow-Methods` – für die Ressource zulässige HTTP-Methoden, z. B. OPTIONS, GET
-`Access-Control-Allow-Headers` – für die Ressource zulässige Header, z. B. `x-auth-token`, `accept-language`, `x-currency`
+- `Access-Control-Allow-Methods` – für die Ressource zulässige HTTP-Methoden, z. B. OPTIONS, GET
+- `Access-Control-Allow-Headers` – für die Ressource zulässige Header, z. B. `x-auth-token`, `accept-language`, `x-currency`
 
 Dadurch kann vorab geprüft werden, ob eine Ressource kein Token erfordert oder ob Ihr Token ausreichenden Zugriff bietet.
 
 Der Versuch, eine nicht zulässige Methode auf einer Ressource auszuführen, führt zum `405 Method Not Allowed error status`.
 
-### 5. API-Konstanten
+## 5. API-Konstanten
 Die Liste enthält konstante Werte, die in bestimmten Fällen angegeben werden müssen und nicht aus API-Ressourcen abgerufen werden können.
 
 <table class="table table-striped table-bordered">
@@ -193,11 +194,11 @@ zusätzliche Carrier-Informationen: <code>PACZKOMAT</code>,
     </tbody>
 </table>
 
-### 6. API-Paginierung
+## 6. API-Paginierung
 
 Alle Ressourcen, die Paginierung unterstützen, folgen dem untenstehenden Schema.
 
-#### Anfrage
+### Anfrage
 
 <table class="table table-striped table-bordered">
     <thead>
@@ -226,7 +227,7 @@ Alle Ressourcen, die Paginierung unterstützen, folgen dem untenstehenden Schema
     </tbody>
 </table>
 
-#### Antwort
+### Antwort
 
 <table class="table table-striped table-bordered">
     <thead>
@@ -255,11 +256,11 @@ Alle Ressourcen, die Paginierung unterstützen, folgen dem untenstehenden Schema
     </tbody>
 </table>
 
-#### Paginierungsbeispiel
+### Paginierungsbeispiel
 
 Wenn Sie maximal 10 Datensätze pro Seite anzeigen möchten, fragen Sie für die erste Seite die API mit `offset` = 0 und `limit` = 10 ab. In der Antwort erhalten Sie die Information, dass die Gesamtzahl der Ergebnisse 126 beträgt. Sie wissen, dass es bei zehn Ergebnissen pro Seite 13 Ergebnisseiten gibt (die letzte hat 6 Ergebnisse). Um die zweite Seite anzuzeigen, fragen Sie die API mit `offset` = 10 und `limit` = 10 ab.
 
-### 7. API-Antworten
+## 7. API-Antworten
 
 Die API verwendet die folgenden Antwortstatus ([RFC 2616](https://www.ietf.org/rfc/rfc2616.txt)):
 

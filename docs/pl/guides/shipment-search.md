@@ -2,9 +2,9 @@
 title: Shipment search
 ---
 
-#### 1. Punkt -> Punkt
+## 1. Punkt -> Punkt
 
-    W celu wyszukania transportu pomiędzy punktami (ATM/PUDO) należy posłużyć się wyszukiwaniem ofert używając pól:
+W celu wyszukania transportu pomiędzy punktami (ATM/PUDO) należy posłużyć się wyszukiwaniem ofert używając pól:
     
 | Endpoint | Nazwa | Wartość | Link |
 | --- | --- | --- | --- |
@@ -17,9 +17,9 @@ title: Shipment search
 
 Nie ma wymagania podawania punktu nadawczego, ale w przypadku odbioru wymagane jest pole receiverAddress[pointId].
 
-#### 2. Punkt -> Drzwi
+## 2. Punkt -> Drzwi
 
-    W celu wyszukania transportu z punktu (ATM/PUDO) należy posłużyć się wyszukiwaniem ofert używając pól:
+W celu wyszukania transportu z punktu (ATM/PUDO) należy posłużyć się wyszukiwaniem ofert używając pól:
     
 | Endpoint | Nazwa | Wartość | Link |
 | --- | --- | --- | --- |
@@ -32,7 +32,7 @@ Nie ma wymagania podawania punktu nadawczego, ale w przypadku odbioru wymagane j
 
 Nie ma wymagania podawania punktu nadawczego.
 
-#### 3. Crossborder -> Drzwi
+## 3. Crossborder -> Drzwi
 
        
 | Endpoint | Nazwa | Wartość | Link |

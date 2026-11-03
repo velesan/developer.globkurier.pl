@@ -4,80 +4,80 @@ title: Addon categories
 
 | Kod dla integracji | Nazwa | Przykładowa struktura w integracji |
 | --- | --- | --- |
-| ALCOHOL | Przewóz alkoholu | "ALCOHOL":{ "value" = true} |
-| CAR_WITH_LIFT | Podjazd samochodu z windą | "CAR_WITH_LIFT":{ "value" = true} |
-| CAREFULLY | Ostrożnie: przesyłka zawierająca wrażliwą zawartość | "CAREFULLY":{ "value" = true} |
-| CARRY_PACKAGE | Wniesienie przesyłki | "CARRY_PACKAGE":{ "value" = true} |
-| CASH_ON_DELIVERY | Pobranie (COD) | "CASH_ON_DELIVERY": {"value": 100, "bankAccountNumber": "PL5210................",            "name": "Name", "addressLine1": "Address line 1", "addressLine2": "Address line 2" "swiftCode":""} |
-| COMPLAINT_OF_SERVICE | Reklamacja usługi | "COMPLAINT_OF_SERVICE":{ "value" = true} |
-| COURIER_WITH_LABEL | Kurier przywozi ze sobą dokumenty przewozowe | "COURIER_WITH_LABEL":{ "value" = true} |
-| CUSTOMS_CLEARANCE | Odprawa celna | "CUSTOMS_CLEARANCE":{ "value" = true} |
-| DECLARED_VALUE | Deklarowana wartość przesyłki | "DECLARED_VALUE":{ "value" = true} |
-| DELIVERY_BY_HAND | Doręczenie do rąk własnych (DRW) | "DELIVERY_BY_HAND":{ "value" = true} |
-| DELIVERY_GUARANTEED | Doręczenie gwarantowane | "DELIVERY_GUARANTEED":{ "value" = true} |
-| DUTY_DAP | Incoterms DDP (Podatek i cło opłaca odbiorca) | "DUTY_DAP":{ "value" = true} |
-| DUTY_DDP_OUTER | Incoterms DDP (cło opłaca klient) | "DUTY_DDP_OUTER":{ "value" = true} |
-| DUTY_DDP_PREMIUM | Incoterms DDP (Podatek i cło opłaca nadawca - DDP Premium) | "DUTY_DDP_PREMIUM":{ "value" = true} |
-| DUTY_DAP_PREMIUM | Incoterms DAP (Podatek i cło opłaca odbiorca - DAP Premium) | "DUTY_DAP_PREMIUM":{ "value" = true} |
-| DUTY_DDP | Podatek i cło opłaca nadawca (DDP) | "DUTY_DDP":{ "value" = true} |
-| DUTY_DDP_MARKETPLACE / _UK / _NORWAY | DDP dla zamówień marketplace | "DUTY_DDP_MARKETPLACE":{ "value" = true} |
-| EXPORTER_OF_RECORD | Opłata za usługę Exporter of Record | "EXPORTER_OF_RECORD":{ "value" = true} |
-| ELECTRONIC_PROOF_OF_DELIVERY | Elektroniczne potwierdzenie odbioru przesyłki (EPO) | "ELECTRONIC_PROOF_OF_DELIVERY":{ "value" = true} |
-| ELECTRONIC_TRADE_DOCUMENTS | Dokumenty celne wyślę w formie elektronicznej  | "ELECTRONIC_TRADE_DOCUMENTS":{ "value" = true} |
-| EVENING_DELIVERY | Doręczenie wieczorne 17-19 | "EVENING_DELIVERY":{ "value" = true} |
-| FLUID_AND_GASES | Przewóz płynów lub gazów | "FLUID_AND_GASES":{ "value" = true} |
-| FRAGILE | Przewóź przedmiotów delikatnych | "FRAGILE":{ "value" = true} |
-| FUMIGATION | Fumigacja przesyłki | "FUMIGATION":{ "value" = true} |
-| FURNITURE_ABOLITION | Zniesienie mebli | "FURNITURE_ABOLITION":{ "value" = true} |
-| FURNITURE_ASSEMBLY | Montaż mebli | "FURNITURE_ASSEMBLY":{ "value" = true} |
-| FURNITURE_BRINGING | Wniesienie mebli | "FURNITURE_BRINGING":{ "value" = true} |
-| FURNITURE_TAKING_OLD | Zabranie starych mebli | "FURNITURE_TAKING_OLD":{ "value" = true} |
-| FURNITURE_UNPACKING | Rozpakowanie mebli | "FURNITURE_UNPACKING":{ "value" = true} |
-| INSECTS | Przewóź owadów | "INSECTS":{ "value" = true} |
-| INSURANCE | Ubezpieczenie | "INSURANCE":{ "value" = 500} |
-| INSURANCE_CARGO | Ubezpieczenie Premium | "INSURANCE_CARGO":{ "value" = 500} |
-| LATE_EVENING_DELIVERY | Doręczenie późnym wieczorem 19-22 | "LATE_EVENING_DELIVERY":{ "value" = true} |
-| LIVE_BIRDS | Przewóz żywych ptaków | "LIVE_BIRDS":{ "value" = true} |
-| LIVE_PLANTS | Przewóz roślin | "LIVE_PLANTS":{ "value" = true} |
-| LOAD_AND_UNLOAD | Załadunek / rozładunek | "LOAD_AND_UNLOAD":{ "value" = true} |
-| MAIL_ON_DELIVERY | Powiadomienie e-mailowe o doręczeniu | "MAIL_ON_DELIVERY":{ "value" = true} |
-| MANUAL_WAYBILL | Dopłata za ręczne wypisanie i wydruk etykiety | "MANUAL_WAYBILL":{ "value" = true} |
-| MORNING_DELIVERY | Doręczenie poranne 9-10 | "MORNING_DELIVERY":{ "value" = true} |
-| NO_PALLET_SURCHARGE | Dopłata za brak palety | "NO_PALLET_SURCHARGE":{ "value" = true} |
-| NOON_DELIVERY | Doręczenie w godzinach południowych 12-16 | "NOON_DELIVERY":{ "value" = true} |
-| NOT_STANDARD | Element niestandardowy | "NOT_STANDARD":{ "value" = true} |
-| OBJECTS_EASY_TO_CLEAN_AND_GLASS | Przewóz objektów kruchych i szkła | "OBJECTS_EASY_TO_CLEAN_AND_GLASS":{ "value" = true} |
-| ORDER_BY_CUSTOMER_SERVICE_OFFICE | Zlecenie poprzez Biuro Obsługi Klienta | "ORDER_BY_CUSTOMER_SERVICE_OFFICE":{ "value" = true} |
-| ORDERED_COURIER | Mam już zamówionego kuriera | "ORDERED_COURIER":{ "value" = true} |
-| PAID_PICKUP | Zamawiam podjazd kuriera | "PAID_PICKUP":{ "value" = true} |
-| PAID_SENDING_FROM_POINT | Nadanie w punkcie dodatkowo płatne | "PAID_SENDING_FROM_POINT":{ "value" = true} |
-| PAPER_TRADE_DOCUMENTS | Dokumenty celne dołączę do paczki w formie papierowej | "PAPER_TRADE_DOCUMENTS":{ "value" = true} |
-| POINT_WITH_LABEL | Nadam w punkcie bez etykiety | "POINT_WITH_LABEL":{ "value" = true} |
-| PRE_DELIVERY_INFORMATION | Awizacja przesyłki, informacja przed doręczeniem (PDI) | "PRE_DELIVERY_INFORMATION":{ "value" = true} |
-| PRE_DELIVERY_PHONE_CALL | Awizacja telefoniczna przed doręczeniem | "PRE_DELIVERY_PHONE_CALL":{ "value" = true} |
-| PRE_PICKUP_PHONE_CALL | Awizacja telefoniczna przed nadaniem przesyłki | "PRE_PICKUP_PHONE_CALL":{ "value" = true} |
-| PROOF_OF_DELIVERY | Potwierdzenie odbioru przesyłki (POD) | "PROOF_OF_DELIVERY":{ "value" = true} |
-| RECEIVER_EXTENDED_AREA | Doręczenie w strefie rozszerzonej | "RECEIVER_EXTENDED_AREA":{ "value" = true} |
-| RECEIVER_REMOTE_AREA | Doręczenie w obszarze odległym (strefa 1/A) | "RECEIVER_REMOTE_AREA":{ "value" = true} |
-| RECEIVER_REMOTE_AREA_2 | Doręczenie w obszarze odległym (strefa 2/B) | "RECEIVER_REMOTE_AREA_2":{ "value" = true} |
-| RECEIVER_REMOTE_AREA_3 | Doręczenie w obszarze odległym (strefa 3/C) | "RECEIVER_REMOTE_AREA_3":{ "value" = true} |
-| RECEIVER_REMOTE_AREA_4 | Doręczenie w obszarze odległym (strefa 4/D) | "RECEIVER_REMOTE_AREA_4":{ "value" = true} |
-| RECEIVER_REMOTE_AREA_5 | Doręczenie w obszarze odległym (strefa 5/E) | "RECEIVER_REMOTE_AREA_5":{ "value" = true} |
-| RECEIVER_TYPE_COMPANY | Doręczenie do firmy | "RECEIVER_TYPE_COMPANY":{ "value" = true} |
-| RECEIVER_TYPE_PRIVATE_PERSON | Doręczenie do osoby prywatnej | "RECEIVER_TYPE_PRIVATE_PERSON":{ "value" = true} |
-| RETURN_OF_DOCUMENTS | Zwrot dokumentów załączonych do przesyłki (ROD) | "RETURN_OF_DOCUMENTS":{ "value" = true} |
-| RETURN_OF_PALLETS | Zwrot palet do nadawcy (ROP) | "RETURN_OF_PALLETS":{ "value" = true} |
-| RETURN_SHIPMENT | Dołącz etykiete zwrotną | "RETURN_SHIPMENT":{ "value" = true} |
-| RETURN_SHIPMENT_ADDRESS | Indywidualne dane na liście przewozowym | "RETURN_SHIPMENT_ADDRESS":{ "value" = true} |
-| SATURDAY_DELIVERY | Doręczenie w sobotę | "SATURDAY_DELIVERY":{ "value" = true} |
-| SENDER_EXTENDED_AREA | Odbiór w strefie rozszerzonej | "SENDER_EXTENDED_AREA":{ "value" = true} |
-| SENDER_REMOTE_AREA | Odbiór w obszarze odległym (strefa 1) | "SENDER_REMOTE_AREA":{ "value" = true} |
-| SENDER_REMOTE_AREA_2 | Odbiór w obszarze odległym (strefa 2) | "SENDER_REMOTE_AREA_2":{ "value" = true} |
-| SENDER_REMOTE_AREA_3 | Odbiór w obszarze odległym (strefa 3) | "SENDER_REMOTE_AREA_3":{ "value" = true} |
-| SMS_ON_DELIVERY | Powiadomienie sms-owe o doręczeniu | "SMS_ON_DELIVERY":{ "value" = true} |
-| SMS_ON_PICKUP | Powiadomienie sms-owe o nadaniu | "SMS_ON_PICKUP":{ "value" = true} |
-| SMS_ON_POINT_DELIVERY | Powiadomienie o doręczeniu do punktu | "SMS_ON_POINT_DELIVERY":{ "value" = true} |
-| TRANSPORT_PAID_BY_RECEIVER | Koszty transportu pokrywa odbiorca przesyłki (NKO) | "TRANSPORT_PAID_BY_RECEIVER":{ "value" = true} |
-| UNREGISTERED_USER | Bez rejestracji | "UNREGISTERED_USER":{ "value" = true} |
-| WEEKEND_DELIVERY | Doręczenie w weekend | "WEEKEND_DELIVERY":{ "value" = true} |
-| SEASONAL_SURCHARGE | Dopłata sezonowa | "SEASONAL_SURCHARGE":{ "value" = true} |
+| ALCOHOL | Przewóz alkoholu | "ALCOHOL":{ "value": true} |
+| CAR_WITH_LIFT | Podjazd samochodu z windą | "CAR_WITH_LIFT":{ "value": true} |
+| CAREFULLY | Ostrożnie: przesyłka zawierająca wrażliwą zawartość | "CAREFULLY":{ "value": true} |
+| CARRY_PACKAGE | Wniesienie przesyłki | "CARRY_PACKAGE":{ "value": true} |
+| CASH_ON_DELIVERY | Pobranie (COD) | "CASH_ON_DELIVERY": {"value": 100, "bankAccountNumber": "PL5210................",            "name": "Name", "addressLine1": "Address line 1", "addressLine2": "Address line 2", "swiftCode":""} |
+| COMPLAINT_OF_SERVICE | Reklamacja usługi | "COMPLAINT_OF_SERVICE":{ "value": true} |
+| COURIER_WITH_LABEL | Kurier przywozi ze sobą dokumenty przewozowe | "COURIER_WITH_LABEL":{ "value": true} |
+| CUSTOMS_CLEARANCE | Odprawa celna | "CUSTOMS_CLEARANCE":{ "value": true} |
+| DECLARED_VALUE | Deklarowana wartość przesyłki | "DECLARED_VALUE":{ "value": true} |
+| DELIVERY_BY_HAND | Doręczenie do rąk własnych (DRW) | "DELIVERY_BY_HAND":{ "value": true} |
+| DELIVERY_GUARANTEED | Doręczenie gwarantowane | "DELIVERY_GUARANTEED":{ "value": true} |
+| DUTY_DAP | Incoterms DDP (Podatek i cło opłaca odbiorca) | "DUTY_DAP":{ "value": true} |
+| DUTY_DDP_OUTER | Incoterms DDP (cło opłaca klient) | "DUTY_DDP_OUTER":{ "value": true} |
+| DUTY_DDP_PREMIUM | Incoterms DDP (Podatek i cło opłaca nadawca - DDP Premium) | "DUTY_DDP_PREMIUM":{ "value": true} |
+| DUTY_DAP_PREMIUM | Incoterms DAP (Podatek i cło opłaca odbiorca - DAP Premium) | "DUTY_DAP_PREMIUM":{ "value": true} |
+| DUTY_DDP | Podatek i cło opłaca nadawca (DDP) | "DUTY_DDP":{ "value": true} |
+| DUTY_DDP_MARKETPLACE / _UK / _NORWAY | DDP dla zamówień marketplace | "DUTY_DDP_MARKETPLACE":{ "value": true} |
+| EXPORTER_OF_RECORD | Opłata za usługę Exporter of Record | "EXPORTER_OF_RECORD":{ "value": true} |
+| ELECTRONIC_PROOF_OF_DELIVERY | Elektroniczne potwierdzenie odbioru przesyłki (EPO) | "ELECTRONIC_PROOF_OF_DELIVERY":{ "value": true} |
+| ELECTRONIC_TRADE_DOCUMENTS | Dokumenty celne wyślę w formie elektronicznej  | "ELECTRONIC_TRADE_DOCUMENTS":{ "value": true} |
+| EVENING_DELIVERY | Doręczenie wieczorne 17-19 | "EVENING_DELIVERY":{ "value": true} |
+| FLUID_AND_GASES | Przewóz płynów lub gazów | "FLUID_AND_GASES":{ "value": true} |
+| FRAGILE | Przewóź przedmiotów delikatnych | "FRAGILE":{ "value": true} |
+| FUMIGATION | Fumigacja przesyłki | "FUMIGATION":{ "value": true} |
+| FURNITURE_ABOLITION | Zniesienie mebli | "FURNITURE_ABOLITION":{ "value": true} |
+| FURNITURE_ASSEMBLY | Montaż mebli | "FURNITURE_ASSEMBLY":{ "value": true} |
+| FURNITURE_BRINGING | Wniesienie mebli | "FURNITURE_BRINGING":{ "value": true} |
+| FURNITURE_TAKING_OLD | Zabranie starych mebli | "FURNITURE_TAKING_OLD":{ "value": true} |
+| FURNITURE_UNPACKING | Rozpakowanie mebli | "FURNITURE_UNPACKING":{ "value": true} |
+| INSECTS | Przewóź owadów | "INSECTS":{ "value": true} |
+| INSURANCE | Ubezpieczenie | "INSURANCE":{ "value": 500} |
+| INSURANCE_CARGO | Ubezpieczenie Premium | "INSURANCE_CARGO":{ "value": 500} |
+| LATE_EVENING_DELIVERY | Doręczenie późnym wieczorem 19-22 | "LATE_EVENING_DELIVERY":{ "value": true} |
+| LIVE_BIRDS | Przewóz żywych ptaków | "LIVE_BIRDS":{ "value": true} |
+| LIVE_PLANTS | Przewóz roślin | "LIVE_PLANTS":{ "value": true} |
+| LOAD_AND_UNLOAD | Załadunek / rozładunek | "LOAD_AND_UNLOAD":{ "value": true} |
+| MAIL_ON_DELIVERY | Powiadomienie e-mailowe o doręczeniu | "MAIL_ON_DELIVERY":{ "value": true} |
+| MANUAL_WAYBILL | Dopłata za ręczne wypisanie i wydruk etykiety | "MANUAL_WAYBILL":{ "value": true} |
+| MORNING_DELIVERY | Doręczenie poranne 9-10 | "MORNING_DELIVERY":{ "value": true} |
+| NO_PALLET_SURCHARGE | Dopłata za brak palety | "NO_PALLET_SURCHARGE":{ "value": true} |
+| NOON_DELIVERY | Doręczenie w godzinach południowych 12-16 | "NOON_DELIVERY":{ "value": true} |
+| NOT_STANDARD | Element niestandardowy | "NOT_STANDARD":{ "value": true} |
+| OBJECTS_EASY_TO_CLEAN_AND_GLASS | Przewóz objektów kruchych i szkła | "OBJECTS_EASY_TO_CLEAN_AND_GLASS":{ "value": true} |
+| ORDER_BY_CUSTOMER_SERVICE_OFFICE | Zlecenie poprzez Biuro Obsługi Klienta | "ORDER_BY_CUSTOMER_SERVICE_OFFICE":{ "value": true} |
+| ORDERED_COURIER | Mam już zamówionego kuriera | "ORDERED_COURIER":{ "value": true} |
+| PAID_PICKUP | Zamawiam podjazd kuriera | "PAID_PICKUP":{ "value": true} |
+| PAID_SENDING_FROM_POINT | Nadanie w punkcie dodatkowo płatne | "PAID_SENDING_FROM_POINT":{ "value": true} |
+| PAPER_TRADE_DOCUMENTS | Dokumenty celne dołączę do paczki w formie papierowej | "PAPER_TRADE_DOCUMENTS":{ "value": true} |
+| POINT_WITH_LABEL | Nadam w punkcie bez etykiety | "POINT_WITH_LABEL":{ "value": true} |
+| PRE_DELIVERY_INFORMATION | Awizacja przesyłki, informacja przed doręczeniem (PDI) | "PRE_DELIVERY_INFORMATION":{ "value": true} |
+| PRE_DELIVERY_PHONE_CALL | Awizacja telefoniczna przed doręczeniem | "PRE_DELIVERY_PHONE_CALL":{ "value": true} |
+| PRE_PICKUP_PHONE_CALL | Awizacja telefoniczna przed nadaniem przesyłki | "PRE_PICKUP_PHONE_CALL":{ "value": true} |
+| PROOF_OF_DELIVERY | Potwierdzenie odbioru przesyłki (POD) | "PROOF_OF_DELIVERY":{ "value": true} |
+| RECEIVER_EXTENDED_AREA | Doręczenie w strefie rozszerzonej | "RECEIVER_EXTENDED_AREA":{ "value": true} |
+| RECEIVER_REMOTE_AREA | Doręczenie w obszarze odległym (strefa 1/A) | "RECEIVER_REMOTE_AREA":{ "value": true} |
+| RECEIVER_REMOTE_AREA_2 | Doręczenie w obszarze odległym (strefa 2/B) | "RECEIVER_REMOTE_AREA_2":{ "value": true} |
+| RECEIVER_REMOTE_AREA_3 | Doręczenie w obszarze odległym (strefa 3/C) | "RECEIVER_REMOTE_AREA_3":{ "value": true} |
+| RECEIVER_REMOTE_AREA_4 | Doręczenie w obszarze odległym (strefa 4/D) | "RECEIVER_REMOTE_AREA_4":{ "value": true} |
+| RECEIVER_REMOTE_AREA_5 | Doręczenie w obszarze odległym (strefa 5/E) | "RECEIVER_REMOTE_AREA_5":{ "value": true} |
+| RECEIVER_TYPE_COMPANY | Doręczenie do firmy | "RECEIVER_TYPE_COMPANY":{ "value": true} |
+| RECEIVER_TYPE_PRIVATE_PERSON | Doręczenie do osoby prywatnej | "RECEIVER_TYPE_PRIVATE_PERSON":{ "value": true} |
+| RETURN_OF_DOCUMENTS | Zwrot dokumentów załączonych do przesyłki (ROD) | "RETURN_OF_DOCUMENTS":{ "value": true} |
+| RETURN_OF_PALLETS | Zwrot palet do nadawcy (ROP) | "RETURN_OF_PALLETS":{ "value": true} |
+| RETURN_SHIPMENT | Dołącz etykiete zwrotną | "RETURN_SHIPMENT":{ "value": true} |
+| RETURN_SHIPMENT_ADDRESS | Indywidualne dane na liście przewozowym | "RETURN_SHIPMENT_ADDRESS":{ "value": true} |
+| SATURDAY_DELIVERY | Doręczenie w sobotę | "SATURDAY_DELIVERY":{ "value": true} |
+| SENDER_EXTENDED_AREA | Odbiór w strefie rozszerzonej | "SENDER_EXTENDED_AREA":{ "value": true} |
+| SENDER_REMOTE_AREA | Odbiór w obszarze odległym (strefa 1) | "SENDER_REMOTE_AREA":{ "value": true} |
+| SENDER_REMOTE_AREA_2 | Odbiór w obszarze odległym (strefa 2) | "SENDER_REMOTE_AREA_2":{ "value": true} |
+| SENDER_REMOTE_AREA_3 | Odbiór w obszarze odległym (strefa 3) | "SENDER_REMOTE_AREA_3":{ "value": true} |
+| SMS_ON_DELIVERY | Powiadomienie sms-owe o doręczeniu | "SMS_ON_DELIVERY":{ "value": true} |
+| SMS_ON_PICKUP | Powiadomienie sms-owe o nadaniu | "SMS_ON_PICKUP":{ "value": true} |
+| SMS_ON_POINT_DELIVERY | Powiadomienie o doręczeniu do punktu | "SMS_ON_POINT_DELIVERY":{ "value": true} |
+| TRANSPORT_PAID_BY_RECEIVER | Koszty transportu pokrywa odbiorca przesyłki (NKO) | "TRANSPORT_PAID_BY_RECEIVER":{ "value": true} |
+| UNREGISTERED_USER | Bez rejestracji | "UNREGISTERED_USER":{ "value": true} |
+| WEEKEND_DELIVERY | Doręczenie w weekend | "WEEKEND_DELIVERY":{ "value": true} |
+| SEASONAL_SURCHARGE | Dopłata sezonowa | "SEASONAL_SURCHARGE":{ "value": true} |
