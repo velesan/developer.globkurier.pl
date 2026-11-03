@@ -7,6 +7,11 @@
   display: none;
 }
 
+.api-release__date {
+  margin-top: -0.6em;
+  font-size: 0.8rem;
+}
+
 /* Swagger UI 4 has no dark theme: keep it on a light panel with its own text colour. */
 [data-md-color-scheme="slate"] .portal-swagger {
   background: #fff;

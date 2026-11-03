@@ -34,6 +34,9 @@ jobs:
       - name: Hook tests
         run: python -m unittest
         working-directory: hooks
+      - name: Changelog script tests
+        # A directory argument works only up to Node 20; the runner has a newer Node, so pass the files.
+        run: node --test tests/*.test.mjs
       - name: No Apidog links left
         run: '! grep -rn --include="*.md" "apidog://" docs/'
       - name: No Apidog export committed
