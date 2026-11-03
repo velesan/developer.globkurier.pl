@@ -27,6 +27,10 @@ theme:
 extra_css:
   - assets/portal.css
 
+extra_javascript:
+  - path: assets/releases.js
+    type: module
+
 markdown_extensions:
   - admonition
   - attr_list

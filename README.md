@@ -43,7 +43,8 @@ Open <http://localhost:8000> (Polish: `/pl/`, German: `/de/`).
   spaces in the tag as `%20`.
 - **API**: put the spec in `docs/specs/`, add `docs/<lang>/api/<name>.md` with `template: api.html` and `spec:`, add it under
   `API reference` in `nav`.
-- **API changelog**: add an entry to `docs/<lang>/changelog.md` and publish a GitHub Release with the same text.
+- **API changelog**: publish a GitHub Release (tag e.g. `api-2026-11-03`, notes in English). The changelog page loads
+  releases in the browser (`docs/assets/releases.js`), so no portal rebuild is needed; pre-releases are hidden.
   Describe contract changes only (endpoints, fields, statuses), no ticket numbers or internal names.
 
 ## Spec updates
@@ -65,6 +66,7 @@ git -C "$GK_DIR" show "$TAG:docs/api/public.openapi.yaml" > docs/specs/public.op
 ```bash
 (cd tools && ../.venv/bin/python -m unittest discover -s apidog_import/tests -t .)
 (cd hooks && ../.venv/bin/python -m unittest)
+node --test tests/
 npx --yes @redocly/cli@1.25.5 lint --config redocly.yaml docs/specs/public.openapi.yaml
 .venv/bin/mkdocs build --strict
 ```

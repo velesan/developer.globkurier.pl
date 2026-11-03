@@ -1,10 +1,10 @@
 ---
-title: Changelog
+title: Änderungen der API
 ---
 
-Änderungen am öffentlichen API-Vertrag (`public.openapi.yaml`). Jeder Eintrag wird zusätzlich als
-[GitHub Release](https://github.com/velesan/developer.globkurier.pl/releases) veröffentlicht.
+Änderungen am öffentlichen API-Vertrag (`public.openapi.yaml`), geladen aus den
+[GitHub Releases](https://github.com/velesan/developer.globkurier.pl/releases) dieses Portals.
 
-## 2026-11-03
-
-- Die Dokumentation wurde von Apidog auf dieses Portal umgezogen. Die API-Referenz wird aus derselben Spezifikation generiert, auf der die API aufgebaut ist.
+<div id="api-releases" data-empty="Noch keine API-Änderungen veröffentlicht." data-error="Die Änderungsliste konnte nicht geladen werden. Siehe GitHub Releases.">
+<p>Wird geladen…</p>
+</div>

@@ -29,6 +29,8 @@ jobs:
       - name: Hook tests
         run: python -m unittest
         working-directory: hooks
+      - name: Changelog script tests
+        run: node --test tests/
       - name: No Apidog links left
         run: '! grep -rn --include="*.md" "apidog://" docs/'
       - name: No Apidog export committed
