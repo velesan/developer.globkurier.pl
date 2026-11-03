@@ -4,7 +4,7 @@ title: Introduction
 
 Previous version of documentation: https://api.globkurier.pl/v1/documentation
 
-### 1. Getting Started
+## 1. Getting Started
 The GlobKurier API is based on REST architecture. Responses are returned in JSON format. Communication with the production endpoint is SSL-encrypted.
 
 Environments are separated. To use the test API, you are required to have a production user account, provided at least one day has passed since registration or profile update (propagation time to the test environment). Test data is deleted at the end of the day.
@@ -22,31 +22,32 @@ Test URL:
 https://test.api.globkurier.pl/v1
 ```
 
-### 2. Language Versions
+## 2. Language Versions
 The API language is selected by sending the accept-language header with an ISO 639-1 language code in the request.
 
 Currently supported languages:
+
 - pl
 - en (default)
 
-### 3. Resource Types
+## 3. Resource Types
 There are 3 resource types by authorization:
 
 - no authorization required (e.g. fetching the country list)
 - optional authorization (e.g. product search, which returns different products for guests and logged-in users) – marked in the documentation with a filter icon
 - requiring authorization via token
 
-### 4. Resource Discovery
+## 4. Resource Discovery
 You can retrieve available methods by querying any resource with the HTTP OPTIONS method. The response will include the following headers:
 
-`Access-Control-Allow-Methods` – allowed HTTP methods for the resource, e.g., OPTIONS, GET
-`Access-Control-Allow-Headers` – allowed headers for the resource, e.g., `x-auth-token`, `accept-language`, `x-currency`
+- `Access-Control-Allow-Methods` – allowed HTTP methods for the resource, e.g., OPTIONS, GET
+- `Access-Control-Allow-Headers` – allowed headers for the resource, e.g., `x-auth-token`, `accept-language`, `x-currency`
 
 This allows pre-verification whether a resource requires no token, or if your token provides sufficient access.
 
 Attempting a not allowed method on a resource will result in the `405 Method Not Allowed error status`.
 
-### 5. API Constants
+## 5. API Constants
 The list contains constant values that must be provided in specific cases and cannot be retrieved from API resources.
 
 <table class="table table-striped table-bordered">
@@ -193,11 +194,11 @@ additional carrier information: <code>PACZKOMAT</code>,
     </tbody>
 </table>
 
-### 6. API Pagination
+## 6. API Pagination
 
 All resources supporting pagination follow the scheme below.
 
-#### Request
+### Request
 
 <table class="table table-striped table-bordered">
     <thead>
@@ -226,7 +227,7 @@ All resources supporting pagination follow the scheme below.
     </tbody>
 </table>
 
-#### Response
+### Response
 
 <table class="table table-striped table-bordered">
     <thead>
@@ -255,11 +256,11 @@ All resources supporting pagination follow the scheme below.
     </tbody>
 </table>
 
-#### Pagination Example
+### Pagination Example
 
 If you want to display a maximum of 10 records per page, to get the first page, query the API with `offset` = 0 and `limit` = 10. In response, you receive information that the total number of results is 126. You know that with ten results per page, there are 13 result pages (the last one has 6 results). To display the second page, query the API with `offset` = 10 and `limit` = 10.
 
-### 7. API Responses
+## 7. API Responses
 
 The API uses the following response statuses ([RFC 2616](https://www.ietf.org/rfc/rfc2616.txt)):
 

@@ -9,10 +9,11 @@ Pola i struktura są dynamiczne i dla każdego przewoźnika mogą być inne. Inf
 Listę pól należy pobrać  [/customs/config](../api/globkurier.md#/Customs/customsGetDeclarationConfigR01) 
 
 Endpoint wymaga podania parametrów: 
+
 - `productId` - Identyfikator produktu pobrany za pomocą zasobu [/products](../api/globkurier.md#/Products/productSearch)
 - `senderCountryId`  oraz `receiverCountryId` - Identyfikator kraju nadawcy/odbiorcy pobrany za pomocą zasobu [/countries](../api/globkurier.md#/Countries/countryListR01)
 - `collectionType` - Typ nadania (PICKUP, POINT, CROSSBORDER)
- 	
+
 Na tej podstawie można przygotować sekcję "customs". Przykład:
 
 

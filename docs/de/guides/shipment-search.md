@@ -2,7 +2,7 @@
 title: Shipment search
 ---
 
-#### 1. Punkt -> Punkt
+## 1. Punkt -> Punkt
 
 Um nach Transporten zwischen Punkten (Automat/PUDO) zu suchen, verwenden Sie das Angebotssuchfeld:
     
@@ -17,7 +17,7 @@ Um nach Transporten zwischen Punkten (Automat/PUDO) zu suchen, verwenden Sie das
 
 Die Angabe des Versandpunkts ist nicht erforderlich, beim Empfang ist jedoch das Feld receiverAddress[pointId] erforderlich.
 
-#### 2. Punkt -> Tür
+## 2. Punkt -> Tür
 
 Um nach Transporten von einem Punkt (Automat/PUDO) zu suchen, verwenden Sie das Angebotssuchfeld:
     
@@ -32,7 +32,7 @@ Um nach Transporten von einem Punkt (Automat/PUDO) zu suchen, verwenden Sie das 
 
 Die Angabe eines Versandpunkts ist nicht erforderlich.
 
-#### 3. Crossborder -> Türen
+## 3. Crossborder -> Türen
 
        
 | Endpunkt | Name | Wert | Link |

@@ -9,10 +9,11 @@ Die Felder und die Struktur sind dynamisch und können für jeden Carrier unters
 Die Liste der Felder ist über [/customs/config](../api/globkurier.md#/Customs/customsGetDeclarationConfigR01) abzurufen 
 
 Der Endpunkt erfordert die folgenden Parameter: 
+
 - `productId` - Produktkennung, abgerufen mit der Ressource [/products](../api/globkurier.md#/Products/productSearch)
 - `senderCountryId` und `receiverCountryId` - Kennung des Absender-/Empfängerlandes, abgerufen mit der Ressource [/countries](../api/globkurier.md#/Countries/countryListR01)
 - `collectionType` - Versandart (PICKUP, POINT, CROSSBORDER)
- 	
+
 Auf dieser Grundlage kann der Abschnitt "customs" vorbereitet werden. Beispiel:
 
 

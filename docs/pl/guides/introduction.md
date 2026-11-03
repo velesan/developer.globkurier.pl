@@ -4,7 +4,7 @@ title: Introduction
 
 Poprzednia wersja dokumentacji: https://api.globkurier.pl/v1/documentation
 
-### 1. Rozpoczęcie pracy
+## 1. Rozpoczęcie pracy
 API GlobKurier jest oparte o architekturę REST. Odpowiedź zwracana jest w formacie JSON. Komunikacja z produkcyjną końcówką jest szyfrowana w SSL.
 
 Środowiska są rozdzielone. Do korzystania z API testowego wymagane jest posiadanie konta użytkownika produkcyjnego pod warunkiem, że minął dzień od rejestracji bądź aktualizacji profilu (czas propagacji na serwis testowy). Dane testowe ulegają usunięciu na koniec dnia.
@@ -22,30 +22,31 @@ URL testowy:
 ```
 https://test.api.globkurier.pl/v1
 ```
-### 2. Wersje językowe
+## 2. Wersje językowe
 Język API wybieramy przesyłając w nagłówku żądania `accept-language` kodu języka w standardzie ISO 639-1.
 
 Obecnie wspierane języki:
 
-pl
-en (domyślny)
+- pl
+- en (domyślny)
 
-### 3. Typy zasobów
+## 3. Typy zasobów
 Wyróżniamy 3 typy zasobów ze względu na autoryzację:
 
 - nie wymagające autoryzacji (np. pobranie listy krajów)
 - z opcjonalną autoryzacją (np. wyszukiwarka produktów, która zwróci inne produkty dla gościa, a inne dla zalogowanego użytkownika) oznaczone w dokumentacji ikoną filtra 
 - wymagające autoryzacji poprzez token
 
-### 4. Odkrywanie zasobów
+## 4. Odkrywanie zasobów
 Dostępne metody możemy pozyskać odpytując dowolny zasób metodą HTTP OPTIONS. Odpowiedź będzie zawierała klucze w nagłówku:
 
-`Access-Control-Allow-Methods` - dozwolone metody HTTP zasobu np. OPTIONS, GET
-`Access-Control-Allow-Headers` - dozwolone nagłówki zasobu np. `x-auth-token`, `accept-language`, `x-currency`
+- `Access-Control-Allow-Methods` - dozwolone metody HTTP zasobu np. OPTIONS, GET
+- `Access-Control-Allow-Headers` - dozwolone nagłówki zasobu np. `x-auth-token`, `accept-language`, `x-currency`
+
 Pozwala to na wcześniejszą weryfikację, czy dany zasób posiada dostęp niewymagający tokenu lub posiadany token uprawnia do niego.
 Próba odpytania zasobu niedozwoloną metodą zakończy się statusem błędu `405 Method Not Allowed`.
 
-### 5. Stałe używane w API
+## 5. Stałe używane w API
 Lista zawiera stałe wartości, które należy w określonych przypadkach przekazać w żądaniu, a których nie można pobrać z zasobów API.
 
 <table class="table table-striped table-bordered">
@@ -193,10 +194,10 @@ Lista zawiera stałe wartości, które należy w określonych przypadkach przeka
                     </tbody>
                 </table>
 
-### 6. Paginacja w API
+## 6. Paginacja w API
 Wszystkie zasoby, w których występuje możliwość sterowania paginacją opierają się na poniższym schemacie.
 
-#### Request
+### Request
 
 <table class="table table-striped table-bordered">
                     <thead>
@@ -225,8 +226,9 @@ Wszystkie zasoby, w których występuje możliwość sterowania paginacją opier
                     </tbody>
                 </table>
 
-#### Odpowiedź
-                <table class="table table-striped table-bordered">
+### Odpowiedź
+
+<table class="table table-striped table-bordered">
                     <thead>
                     <tr>
                         <th>Pole</th>
@@ -259,9 +261,9 @@ Wszystkie zasoby, w których występuje możliwość sterowania paginacją opier
                 </table>
                 
                 
-#### Przykład paginacji
+### Przykład paginacji
 Jeśli chcemy wyświetlić masymalnie 10 pozycji na stronie, aby wyświetlić pierwszą stronę odpytujemy API ustawiając `offset` = 0 oraz `limit` = 10. Zwrotnie otrzymujemy informację, że wszystkich wyników total jest 126. Wiemy, że przy dziesięciu wynikach na stronie, mamy 13 stron wyników (ostatnia zawiera 6 pozycji). Aby wyświetlić drugą stronę odpytujemy API ustawiając `offset` = 10 oraz `limit` = 10.
-### 7. Odpowiedzi API
+## 7. Odpowiedzi API
 API korzysta z następujących statusów odpowiedzi ([RFC 2616](https://www.ietf.org/rfc/rfc2616.txt)):
 
 <table class="table table-striped table-bordered">

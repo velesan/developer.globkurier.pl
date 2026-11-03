@@ -2,9 +2,13 @@
 title: Przykłady / Examples Crossborder
 ---
 
-## I.  [Simplified order placement (bestprice)](../api/globkurier.md#/Orders/orderCreateBestPrice)	
-## 1. Eurohermes:
-a.	Deutschland
+## I.  [Simplified order placement (bestprice)](../api/globkurier.md#/Orders/orderCreateBestPrice)
+
+### 1. Eurohermes:
+
+#### a. Deutschland
+
+```json
 {
     "shipment": {
         "length": 1,
@@ -51,8 +55,11 @@ a.	Deutschland
     "referenceNumber": "TEST/1234",
     "deliveryType": "PICKUP"
 }
+```
 
-b.	Frankreich
+#### b. Frankreich
+
+```json
 {
     "shipment": {
         "length": 1,
@@ -99,9 +106,13 @@ b.	Frankreich
     "referenceNumber": "TEST/1234",
     "deliveryType": "PICKUP"
 }
+```
 
-## 2.	Spring:
-a.	Spanien, Deutschland, Portugal, Italien, Rumänien (EU): 
+### 2. Spring:
+
+#### a. Spanien, Deutschland, Portugal, Italien, Rumänien (EU):
+
+```json
 {
     "shipment": {
         "length": 1,
@@ -148,9 +159,11 @@ a.	Spanien, Deutschland, Portugal, Italien, Rumänien (EU):
     "referenceNumber": "TEST/1234",
     "deliveryType": "PICKUP"
 }
+```
 
-## 3.	UK – Spring
+### 3. UK – Spring
 
+```json
 {
     "shipment": {
         "length": 1,
@@ -222,3 +235,4 @@ a.	Spanien, Deutschland, Portugal, Italien, Rumänien (EU):
     "vatRegistrationNumberReceiver": "GB...................."
   }
 }
+```

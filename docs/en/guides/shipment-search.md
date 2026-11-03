@@ -2,7 +2,7 @@
 title: Shipment search
 ---
 
-#### 1. Point -> Point
+## 1. Point -> Point
 
 To search for transport between points (ATM/PUDO), use the offer search box:
     
@@ -17,7 +17,7 @@ To search for transport between points (ATM/PUDO), use the offer search box:
 
 There is no requirement to specify the sending point, but in case of reception the field receiverAddress[pointId] is required.
 
-#### 2. Point -> Door
+## 2. Point -> Door
 
 To search for transport from a point (ATM/PUDO), use the offer search box:
     
@@ -32,7 +32,7 @@ To search for transport from a point (ATM/PUDO), use the offer search box:
 
 There is no requirement to provide a shipping point.
 
-#### 3. Crossborder -> Doors
+## 3. Crossborder -> Doors
 
        
 | Endpoint | Name | Value | Link |
