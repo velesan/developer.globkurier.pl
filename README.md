@@ -66,7 +66,7 @@ git -C "$GK_DIR" show "$TAG:docs/api/public.openapi.yaml" > docs/specs/public.op
 ```bash
 (cd tools && ../.venv/bin/python -m unittest discover -s apidog_import/tests -t .)
 (cd hooks && ../.venv/bin/python -m unittest)
-node --test tests/
+node --test tests/*.test.mjs
 npx --yes @redocly/cli@1.25.5 lint --config redocly.yaml docs/specs/public.openapi.yaml
 .venv/bin/mkdocs build --strict
 ```
