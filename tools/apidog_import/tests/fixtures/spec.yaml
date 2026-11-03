@@ -1,0 +1,19 @@
+openapi: 3.0.3
+info:
+  title: Fixture
+  version: 1.0.0
+paths:
+  /v1/order:
+    post:
+      tags:
+      - Orders
+      operationId: createOrder
+  /v1/order/labels/{orderHash}:
+    get:
+      tags:
+      - Order Documents
+      - Orders
+      operationId: getOrderLabels
+  /v1/health:
+    get:
+      summary: Untagged operation without operationId

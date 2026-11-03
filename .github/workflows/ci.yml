@@ -1,0 +1,66 @@
+name: Portal
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: portal-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Importer tests
+        run: python -m unittest discover -s apidog_import/tests -t .
+        working-directory: tools
+      - name: Hook tests
+        run: python -m unittest
+        working-directory: hooks
+      - name: No Apidog links left
+        run: '! grep -rn --include="*.md" "apidog://" docs/'
+      - name: No Apidog export committed
+        run: '! git ls-files | grep -i apidog | grep -v "^tools/apidog_import/"'
+      - name: Lint spec (same Redocly version and config as gk)
+        run: npx --yes @redocly/cli@1.25.5 lint --config redocly.yaml docs/specs/public.openapi.yaml
+      - name: Build (strict, fails on broken links)
+        run: mkdocs build --strict
+      - name: Downloadable spec and custom domain are in the site
+        run: |
+          python -c "import json; json.load(open('site/specs/public.openapi.json'))"
+          grep -qx developer.globkurier.pl site/CNAME
+      - uses: actions/upload-pages-artifact@v3
+        if: github.ref == 'refs/heads/main'
+        with:
+          path: site
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: check
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    # One deployment at a time; a newer push waits instead of being overtaken by an older run.
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

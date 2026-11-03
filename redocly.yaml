@@ -1,0 +1,8 @@
+extends:
+  - recommended
+rules:
+  # Wiele endpointów legacy zwraca tylko 200 albo błąd bez treści — nie wymuszamy sztucznych opisów 4xx.
+  operation-4xx-response: off
+  # Serwery są hostami; wersja jest w ścieżce (/v1/...), tak jak w Apidogu.
+  no-server-trailing-slash: error
+  info-license: off

@@ -1,0 +1,136 @@
+site_name: GlobKurier Developers
+site_url: https://developer.globkurier.pl/
+site_description: GlobKurier API documentation, integration guides and API changelog.
+repo_url: https://github.com/velesan/developer.globkurier.pl
+repo_name: velesan/developer.globkurier.pl
+edit_uri: ''
+copyright: GlobKurier.pl
+
+theme:
+  name: material
+  custom_dir: overrides
+  features:
+    - navigation.sections
+    - navigation.top
+    - search.highlight
+    - content.code.copy
+  palette:
+    - media: '(prefers-color-scheme: light)'
+      scheme: default
+      primary: indigo
+      toggle: {icon: material/weather-night, name: Dark mode}
+    - media: '(prefers-color-scheme: dark)'
+      scheme: slate
+      primary: indigo
+      toggle: {icon: material/weather-sunny, name: Light mode}
+
+extra_css:
+  - assets/portal.css
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc: {permalink: true}
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.highlight
+  - pymdownx.details
+
+hooks:
+  - hooks/openapi_json.py
+
+validation:
+  links:
+    not_found: warn
+    anchors: info
+
+plugins:
+  - search
+  - i18n:
+      docs_structure: folder
+      fallback_to_default: true
+      reconfigure_material: true
+      languages:
+        - locale: en
+          default: true
+          name: English
+          build: true
+        - locale: pl
+          name: Polski
+          build: true
+          site_name: GlobKurier dla deweloperów
+          nav_translations:
+            Home: Start
+            Getting started: Pierwsze kroki
+            Introduction: Wprowadzenie
+            Authentication: Autoryzacja
+            Integration strategy: Strategia integracji
+            Integration guides: Przewodniki integracji
+            Full integration: Pełna integracja
+            Fast order integration: Szybkie zamówienie
+            Pricing summary before ordering: Wycena przed zamówieniem
+            Shipment search: Wyszukiwanie przesyłek
+            Crossborder / points: Crossborder / punkty
+            Labels: Etykiety
+            Tracking: Śledzenie
+            Carrier data: Dane przewoźników
+            Addon categories: Kategorie dodatków
+            Order with customs: Zamówienie z odprawą celną
+            Crossborder examples: Przykłady crossborder
+            API reference: Dokumentacja API
+            Changelog: Zmiany w API
+            Support: Wsparcie
+        - locale: de
+          name: Deutsch
+          build: true
+          site_name: GlobKurier für Entwickler
+          nav_translations:
+            Home: Start
+            Getting started: Erste Schritte
+            Introduction: Einführung
+            Authentication: Authentifizierung
+            Integration strategy: Integrationsstrategie
+            Integration guides: Integrationsleitfäden
+            Full integration: Vollständige Integration
+            Fast order integration: Schnellbestellung
+            Pricing summary before ordering: Preisübersicht vor der Bestellung
+            Shipment search: Sendungssuche
+            Crossborder / points: Crossborder / Paketpunkte
+            Labels: Versandetiketten
+            Tracking: Sendungsverfolgung
+            Carrier data: Daten der Versanddienstleister
+            Addon categories: Zusatzleistungen
+            Order with customs: Bestellung mit Zollabfertigung
+            Crossborder examples: Crossborder-Beispiele
+            API reference: API-Referenz
+            Changelog: Änderungen der API
+            Support: Support
+
+nav:
+  - Home: index.md
+  - Getting started:
+      - Introduction: guides/introduction.md
+      - Authentication: authentication.md
+      - Integration strategy: guides/integration-strategy.md
+      - FAQ: guides/faq.md
+  - Integration guides:
+      - Full integration: guides/full-integration.md
+      - Fast order integration: guides/fast-order-integration.md
+      - Pricing summary before ordering: guides/pricing-summary-before-ordering.md
+      - Shipment search: guides/shipment-search.md
+      - Crossborder / points: guides/crossborder-points.md
+      - Labels: guides/labels.md
+      - Tracking: guides/tracking.md
+      - Carrier data: guides/get-carrier-data.md
+      - Addon categories: guides/addon-categories.md
+      - Order with customs: guides/order-with-customs.md
+      - Crossborder examples: guides/przyklady-examples-crossborder.md
+  - API reference:
+      - GlobKurier API: api/globkurier.md
+  - Changelog: changelog.md
+  - Support: support.md
