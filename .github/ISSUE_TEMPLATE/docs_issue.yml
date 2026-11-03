@@ -1,0 +1,17 @@
+name: Documentation issue
+description: Something in this portal is wrong, outdated or missing.
+labels: [docs]
+body:
+  - type: input
+    id: page
+    attributes:
+      label: Page URL
+      placeholder: https://developer.globkurier.pl/guides/labels/
+    validations:
+      required: true
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is wrong or missing
+    validations:
+      required: true

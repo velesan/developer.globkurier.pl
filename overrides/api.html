@@ -1,0 +1,31 @@
+{% extends "main.html" %}
+
+{# Same Swagger UI build and config as gk /v1/docs (SwaggerUiPage); bump both together. #}
+{% block styles %}
+  {{ super() }}
+  <link rel="stylesheet" href="{{ 'assets/swagger-ui/swagger-ui.css' | url }}">
+{% endblock %}
+
+{% block content %}
+  <h1>{{ page.title }}</h1>
+  {{ page.content }}
+  {% set download = {'pl': 'Pobierz specyfikację OpenAPI', 'de': 'OpenAPI-Spezifikation herunterladen'}.get(config.theme.language, 'Download the OpenAPI spec') %}
+  <p class="portal-download">
+    {{ download }}:
+    <a href="{{ (page.meta.spec | replace('.yaml', '.json')) | url }}" download>JSON</a> ·
+    <a href="{{ page.meta.spec | url }}" download>YAML</a>
+  </p>
+  <div id="swagger-ui" class="portal-swagger"></div>
+{% endblock %}
+
+{% block scripts %}
+  {{ super() }}
+  <script src="{{ 'assets/swagger-ui/swagger-ui-bundle.js' | url }}"></script>
+  <script>
+    window.ui = SwaggerUIBundle({
+      url: new URL({{ (page.meta.spec | url) | tojson }}, document.baseURI).href,
+      dom_id: '#swagger-ui',
+      deepLinking: true
+    });
+  </script>
+{% endblock %}

@@ -1,0 +1,46 @@
+{
+  "info": {"name": "GlobKurier"},
+  "apiCollection": [
+    {
+      "name": "Root",
+      "moduleId": 1,
+      "items": [
+        {
+          "name": "Orders",
+          "items": [
+            {"api": {"id": "101", "method": "post", "path": "/v1/order", "name": "Create order"}},
+            {"api": {"id": "102", "method": "get", "path": "/v1/order/labels/{id}", "name": "Get labels"}},
+            {"api": {"id": "103", "method": "get", "path": "/v1/legacy", "name": "Removed endpoint"}}
+          ]
+        }
+      ]
+    }
+  ],
+  "docCollection": [
+    {
+      "name": "Root",
+      "moduleId": 1,
+      "items": [],
+      "children": [
+        {
+          "name": "Integration via the Globkurier API",
+          "items": [
+            {"id": 201, "name": "Labels (PL)", "content": "Pobierz etykietę: [Get labels](apidog://link/endpoint/102). Zobacz [Tracking (PL)](apidog://link/pages/203)."},
+            {"id": 202, "name": "Labels (EN)", "content": "Download the label: [Get labels](apidog://link/endpoint/102). Customs: [Order with customs (PL)](apidog://link/pages/204)."},
+            {"id": 206, "name": "Tracking: statuses (EN)", "content": "Statuses."},
+            {"id": 203, "name": "Tracking (PL)", "content": "Śledzenie: [Removed endpoint](apidog://link/endpoint/103) i [Unknown](apidog://link/endpoint/999). Cło: [Order with customs (PL)](apidog://link/pages/204), [x](apidog://link/schemas/5)."},
+            {"id": 204, "name": "Order with customs (PL)", "content": "Zamówienie: [Create order](apidog://link/endpoint/101).\n\n<Container>\n```mermaid\ngraph TD\n```\n</Container>\n\n<DataSchema id=\"6874954\" />"},
+            {"id": 205, "name": "Przykłady / Examples Crossborder", "content": "## I. [Create order](apidog://link/endpoint/101)"}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Root",
+      "moduleId": 2,
+      "items": [
+        {"id": 301, "name": "Analiza biznesowa aplikacji panelu administracyjnego", "content": "INTERNAL"}
+      ]
+    }
+  ]
+}

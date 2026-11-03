@@ -1,0 +1,83 @@
+---
+title: Addon categories
+---
+
+| Code for integration | Name | Example structure in integration |
+| --- | --- | --- |
+| ALCOHOL | Transportation of alcohol | "ALCOHOL":{ "value" = true} |
+| CAR_WITH_LIFT | Car with lift | "CAR_WITH_LIFT":{ "value" = true} |
+| CAREFULLY | Handle with care: sensitive shipment | "CAREFULLY":{ "value" = true} |
+| CARRY_PACKAGE | Carry in the package | "CARRY_PACKAGE":{ "value" = true} |
+| CASH_ON_DELIVERY | Withdrawal (COD) | "CASH_ON_DELIVERY": {"value": 100, "bankAccountNumber": "PL5210................",            "name": "Name", "addressLine1": "Address line 1", "addressLine2": "Address line 2" "swiftCode":""} |
+| COMPLAINT_OF_SERVICE | Complaint about the service | "COMPLAINT_OF_SERVICE":{ "value" = true} |
+| COURIER_WITH_LABEL | Courier brings with him the shipping documents | "COURIER_WITH_LABEL":{ "value" = true} |
+| CUSTOMS_CLEARANCE | Customs | "CUSTOMS_CLEARANCE":{ "value" = true} |
+| DECLARED_VALUE | Declared value of the shipment | "DECLARED_VALUE":{ "value" = true} |
+| DELIVERY_BY_HAND | Personal delivery (DRW) | "DELIVERY_BY_HAND":{ "value" = true} |
+| DELIVERY_GUARANTEED | Guaranteed delivery | "DELIVERY_GUARANTEED":{ "value" = true} |
+| DUTY_DAP | Incoterms DDP (Tax and customs duties are payable by the recipient) | "DUTY_DAP":{ "value" = true} |
+| DUTY_DDP_OUTER | Incoterms DDP (customer pays duty) | "DUTY_DDP_OUTER":{ "value" = true} |
+| DUTY_DDP_PREMIUM | Incoterms DDP (Tax and customs duties are paid by the sender - DDP Premium) | "DUTY_DDP_PREMIUM":{ "value" = true} |
+| DUTY_DAP_PREMIUM | Incoterms DAP (Tax and duty paid by receiver - DAP Premium) | "DUTY_DAP_PREMIUM":{ "value" = true} |
+| DUTY_DDP | Tax and duty paid by sender (DDP) | "DUTY_DDP":{ "value" = true} |
+| DUTY_DDP_MARKETPLACE / _UK / _NORWAY | DDP for marketplace orders | "DUTY_DDP_MARKETPLACE":{ "value" = true} |
+| EXPORTER_OF_RECORD | Exporter of Record service fee | "EXPORTER_OF_RECORD":{ "value" = true} |
+| ELECTRONIC_PROOF_OF_DELIVERY | Electronic confirmation of receipt of the shipment (EPO) | "ELECTRONIC_PROOF_OF_DELIVERY":{ "value" = true} |
+| ELECTRONIC_TRADE_DOCUMENTS | I will send customs documents in electronic form  | "ELECTRONIC_TRADE_DOCUMENTS":{ "value" = true} |
+| EVENING_DELIVERY | Evening delivery 5-7pm | "EVENING_DELIVERY":{ "value" = true} |
+| FLUID_AND_GASES | Transportation of liquids or gases | "FLUID_AND_GASES":{ "value" = true} |
+| FRAGILE | Transport fragile items | "FRAGILE":{ "value" = true} |
+| FUMIGATION | Fumigation of the shipment | "FUMIGATION":{ "value" = true} |
+| FURNITURE_ABOLITION | Abolittion the furniture | "FURNITURE_ABOLITION":{ "value" = true} |
+| FURNITURE_ASSEMBLY | Furniture assembly | "FURNITURE_ASSEMBLY":{ "value" = true} |
+| FURNITURE_BRINGING | Bringing in furniture | "FURNITURE_BRINGING":{ "value" = true} |
+| FURNITURE_TAKING_OLD | Taking away old furniture | "FURNITURE_TAKING_OLD":{ "value" = true} |
+| FURNITURE_UNPACKING | Unpacking furniture | "FURNITURE_UNPACKING":{ "value" = true} |
+| INSECTS | Transport insects | "INSECTS":{ "value" = true} |
+| INSURANCE | Insurance | "INSURANCE":{ "value" = 500} |
+| INSURANCE_CARGO | Insurance Premium | "INSURANCE_CARGO":{ "value" = 500} |
+| LATE_EVENING_DELIVERY | Late evening delivery 7-10pm | "LATE_EVENING_DELIVERY":{ "value" = true} |
+| LIVE_BIRDS | Transport of live birds | "LIVE_BIRDS":{ "value" = true} |
+| LIVE_PLANTS | Transport of plants | "LIVE_PLANTS":{ "value" = true} |
+| LOAD_AND_UNLOAD | Loading / unloading | "LOAD_AND_UNLOAD":{ "value" = true} |
+| MAIL_ON_DELIVERY | Email delivery notification | "MAIL_ON_DELIVERY":{ "value" = true} |
+| MANUAL_WAYBILL | Additional fee for manually writing and printing the label | "MANUAL_WAYBILL":{ "value" = true} |
+| MORNING_DELIVERY | Morning delivery 9-10am | "MORNING_DELIVERY":{ "value" = true} |
+| NO_PALLET_SURCHARGE | Extra charge for missing pallet | "NO_PALLET_SURCHARGE":{ "value" = true} |
+| NOON_DELIVERY | Delivery in the afternoon hours between 12-4pm | "NOON_DELIVERY":{ "value" = true} |
+| NOT_STANDARD | Not standard element | "NOT_STANDARD":{ "value" = true} |
+| OBJECTS_EASY_TO_CLEAN_AND_GLASS | ransportation of fragile objects and glass | "OBJECTS_EASY_TO_CLEAN_AND_GLASS":{ "value" = true} |
+| ORDER_BY_CUSTOMER_SERVICE_OFFICE | Order through the Customer Service Office | "ORDER_BY_CUSTOMER_SERVICE_OFFICE":{ "value" = true} |
+| ORDERED_COURIER | I have already booked a courier | "ORDERED_COURIER":{ "value" = true} |
+| PAID_PICKUP | I am ordering a courier pick-up | "PAID_PICKUP":{ "value" = true} |
+| PAID_SENDING_FROM_POINT | Drop-off at the point is subject to an additional fee | "PAID_SENDING_FROM_POINT":{ "value" = true} |
+| PAPER_TRADE_DOCUMENTS | I will attach the customs documents to the parcel in paper form | "PAPER_TRADE_DOCUMENTS":{ "value" = true} |
+| POINT_WITH_LABEL | I will send it at a point without a label | "POINT_WITH_LABEL":{ "value" = true} |
+| PRE_DELIVERY_INFORMATION | Shipment notification, pre-delivery information (PDI) | "PRE_DELIVERY_INFORMATION":{ "value" = true} |
+| PRE_DELIVERY_PHONE_CALL | Telephone notification before delivery | "PRE_DELIVERY_PHONE_CALL":{ "value" = true} |
+| PRE_PICKUP_PHONE_CALL | Telephone notification before shipment | "PRE_PICKUP_PHONE_CALL":{ "value" = true} |
+| PROOF_OF_DELIVERY | Confirmation of receipt of the shipment (POD) | "PROOF_OF_DELIVERY":{ "value" = true} |
+| RECEIVER_EXTENDED_AREA | Delivery in the extended zone | "RECEIVER_EXTENDED_AREA":{ "value" = true} |
+| RECEIVER_REMOTE_AREA | Remote area delivery (zone 1/A) | "RECEIVER_REMOTE_AREA":{ "value" = true} |
+| RECEIVER_REMOTE_AREA_2 | Remote area delivery (zone 2/B) | "RECEIVER_REMOTE_AREA_2":{ "value" = true} |
+| RECEIVER_REMOTE_AREA_3 | Remote area delivery (zone 3/C) | "RECEIVER_REMOTE_AREA_3":{ "value" = true} |
+| RECEIVER_REMOTE_AREA_4 | Remote area delivery (zone 4/D) | "RECEIVER_REMOTE_AREA_4":{ "value" = true} |
+| RECEIVER_REMOTE_AREA_5 | Remote area delivery (zone 5/E) | "RECEIVER_REMOTE_AREA_5":{ "value" = true} |
+| RECEIVER_TYPE_COMPANY | Delivery to the company | "RECEIVER_TYPE_COMPANY":{ "value" = true} |
+| RECEIVER_TYPE_PRIVATE_PERSON | Delivery to a private person | "RECEIVER_TYPE_PRIVATE_PERSON":{ "value" = true} |
+| RETURN_OF_DOCUMENTS | Return of documents attached to the shipment (ROD) | "RETURN_OF_DOCUMENTS":{ "value" = true} |
+| RETURN_OF_PALLETS | Return of pallets to sender (ROP) | "RETURN_OF_PALLETS":{ "value" = true} |
+| RETURN_SHIPMENT | Include a return label | "RETURN_SHIPMENT":{ "value" = true} |
+| RETURN_SHIPMENT_ADDRESS | Individual data on the waybill | "RETURN_SHIPMENT_ADDRESS":{ "value" = true} |
+| SATURDAY_DELIVERY | Saturday delivery | "SATURDAY_DELIVERY":{ "value" = true} |
+| SENDER_EXTENDED_AREA | Pick-up in the extended zone | "SENDER_EXTENDED_AREA":{ "value" = true} |
+| SENDER_REMOTE_AREA | Remote Area Pickup (Zone 1) | "SENDER_REMOTE_AREA":{ "value" = true} |
+| SENDER_REMOTE_AREA_2 | Remote Area Pickup (Zone 2) | "SENDER_REMOTE_AREA_2":{ "value" = true} |
+| SENDER_REMOTE_AREA_3 | Remote Area Pickup (Zone 3) | "SENDER_REMOTE_AREA_3":{ "value" = true} |
+| SMS_ON_DELIVERY | SMS delivery notification | "SMS_ON_DELIVERY":{ "value" = true} |
+| SMS_ON_PICKUP | SMS notification about shipment | "SMS_ON_PICKUP":{ "value" = true} |
+| SMS_ON_POINT_DELIVERY | Notification of delivery to point | "SMS_ON_POINT_DELIVERY":{ "value" = true} |
+| TRANSPORT_PAID_BY_RECEIVER | Transport costs are covered by the recipient of the shipment (NKO) | "TRANSPORT_PAID_BY_RECEIVER":{ "value" = true} |
+| UNREGISTERED_USER | Without registration | "UNREGISTERED_USER":{ "value" = true} |
+| WEEKEND_DELIVERY | Weekend delivery | "WEEKEND_DELIVERY":{ "value" = true} |
+| SEASONAL_SURCHARGE | Seasonal surcharge | "SEASONAL_SURCHARGE":{ "value" = true} |
