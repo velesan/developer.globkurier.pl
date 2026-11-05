@@ -8449,7 +8449,11 @@ paths:
       tags:
       - Products
       summary: Get addons for a product
-      description: 'Addons available for the given product and shipment, priced for the given parameters (`X-Currency`, default
+      description: '**Rate limit: 1000 requests per clock hour per account (resets at the full hour; sub-accounts count towards their
+        main account) and 40 per second per session (auth token)**; above it 429. The endpoint serves picking addons for a chosen product, not scanning the offer: an
+        integration that needs more talks to GlobKurier first.
+
+        Addons available for the given product and shipment, priced for the given parameters (`X-Currency`, default
         PLN).
 
         Client-side rules: an INSURANCE addon is required when a CASH_ON_DELIVERY addon or cash-on-delivery payment is chosen,
@@ -8624,6 +8628,21 @@ paths:
                 $ref: '#/components/schemas/ProductAddonList'
         '400':
           $ref: '#/components/responses/BadRequest'
+        '429':
+          description: 'Rate limit exceeded: a signed-in account may send up to 1000 of these requests per hour
+            (sub-accounts count towards their main account) and each session (auth token) up to 40 per second. The JSON
+            body names the limit that was hit, translated by Accept-Language; retry after the number of seconds in the
+            Retry-After header (to the end of the second or of the hour). The first shipment sent through an integration
+            lifts the hourly quota of the account; it can also be asked for with POST /v1/user/apiQuotaExemption.
+            Anonymous callers fall under the per-IP limit of the API, 60 requests per minute, answered with an empty body.'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       security:
       - {}
       - tokenAuth: []
@@ -8633,7 +8652,11 @@ paths:
       tags:
       - Products
       summary: Search products
-      description: 'Prices the shipment and returns the available products grouped by delivery-time type: `standard`, `noon`,
+      description: '**Rate limit: 500 requests per clock hour per account (resets at the full hour; sub-accounts count towards their
+        main account) and 20 per second per session (auth token)**; above it 429. The search serves a person picking a product from the list, not scanning prices:
+        an integration should price shipments with `POST /v1/order/bestPrice` and talk to GlobKurier first.
+
+        Prices the shipment and returns the available products grouped by delivery-time type: `standard`, `noon`,
         `morning`
 
         (next day by noon / in the morning - confirm by repeating the search with both post codes), `fast` (5-10 h) and
@@ -8796,6 +8819,21 @@ paths:
                 $ref: '#/components/schemas/ProductSearchResult'
         '400':
           $ref: '#/components/responses/BadRequest'
+        '429':
+          description: 'Rate limit exceeded: a signed-in account may send up to 500 of these requests per hour
+            (sub-accounts count towards their main account) and each session (auth token) up to 20 per second. The JSON
+            body names the limit that was hit, translated by Accept-Language; retry after the number of seconds in the
+            Retry-After header (to the end of the second or of the hour). The first shipment sent through an integration
+            lifts the hourly quota of the account; it can also be asked for with POST /v1/user/apiQuotaExemption.
+            Anonymous callers fall under the per-IP limit of the API, 60 requests per minute, answered with an empty body.'
+          headers:
+            Retry-After:
+              schema:
+                type: integer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       security:
       - {}
       - tokenAuth: []
@@ -10303,6 +10341,82 @@ paths:
           $ref: '#/components/responses/BadRequest'
         '401':
           $ref: '#/components/responses/Unauthorized'
+  /v1/user/apiQuotaExemption:
+    get:
+      operationId: userApiQuotaExemption
+      tags:
+      - User
+      summary: Status of the exemption from the hourly quota on product search and addons
+      description: 'GET /v1/products and GET /v1/product/addons serve a person picking a product and its addons, so a
+        signed-in account may call them up to 500 / 1000 times per clock hour. An account whose order placed through an
+        integration (any order origin but the GlobKurier website and panels, the default API origin included) was
+        handed to the carrier - granted within about 15 minutes of the carrier taking it - or that customer service
+        exempted skips that hourly quota (the per-second limit stays). `PENDING` means a request reached customer
+        service within the last day. Main accounts only; sub-accounts share the main account''s exemption.
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/AcceptLanguage'
+      responses:
+        '200':
+          description: The exemption status of the main account.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiQuotaExemptionStatus'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      operationId: userApiQuotaExemptionRequest
+      tags:
+      - User
+      summary: Ask to be exempted from the hourly quota on product search and addons
+      description: 'Files a request for customer service, who will contact the account and grant the exemption to an
+        agreed integration (202 PENDING); `description` is required - what is integrated and the expected number of
+        calls per hour (at least 20 characters besides leading and trailing spaces). For an account that has not shipped
+        yet: the first shipment sent through an integration grants the exemption on its own. An account already
+        exempted gets 200 GRANTED. A request is sent at most once a day; asking again meanwhile
+        answers 202 PENDING without requiring `description`. Main accounts only. Prefer `POST /v1/order/bestPrice` for pricing
+        shipments from an integration.
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/AcceptLanguage'
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                  minLength: 20
+                  maxLength: 2000
+                  description: What is integrated and the expected traffic. Required unless the account is already exempted or its request is pending.
+      responses:
+        '200':
+          description: The account is already exempted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiQuotaExemptionStatus'
+        '202':
+          description: The request went to customer service.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiQuotaExemptionStatus'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '503':
+          description: The request could not be sent to customer service; try again later.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /v1/user/accountManager:
     get:
       operationId: userGetAccountManager
@@ -14251,6 +14365,17 @@ components:
           - UN_EXCLUDED
           - null
           description: Only with `productId` - why the product does not take the entry; null when it does.
+    ApiQuotaExemptionStatus:
+      type: object
+      required:
+      - status
+      properties:
+        status:
+          type: string
+          enum:
+          - GRANTED
+          - PENDING
+          - NONE
     Error:
       type: object
       description: 'Error envelope. Empty sections are omitted. `errorCodes` is returned only when the request sends the `x-error-codes:
