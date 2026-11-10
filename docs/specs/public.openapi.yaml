@@ -536,9 +536,10 @@ paths:
         `failedReturnLink`) plus `authIntent` (`login`), because the OAuth callback (`GET /v1/auth/login/allegro`) is shared
         by log-in and registration — the redirect URI is registered at Allegro (GLOBKURIER-10154).
 
-        Log-in never creates an account: when no GlobKurier account is connected to the Allegro user (nor registered with
-        its e-mail), the callback redirects to `failedReturnLink` with `PLATFORM_ACCOUNT_NOT_REGISTERED` — use `POST /v1/auth/register/allegro`
-        instead.
+        Log-in also signs up an Allegro user who has no account: when no GlobKurier account is connected to the Allegro user
+        (nor registered with its e-mail), the callback creates one from the Allegro data and answers like a registration
+        (`accountCreated=1&platform=allegro`). While that is switched off, the callback redirects to `failedReturnLink` with
+        `PLATFORM_ACCOUNT_NOT_REGISTERED` instead — use `POST /v1/auth/register/allegro` then.
 
         Intended for browser (form) submission. No validation happens in this step - the return links are validated on the
         callback.
@@ -585,9 +586,10 @@ paths:
         `failedReturnLink`) plus `authIntent` (`login`), because the OAuth callback (`GET /v1/auth/login/google`) is shared
         by log-in and registration — the redirect URI is registered at Google (GLOBKURIER-10154).
 
-        Log-in never creates an account: when no GlobKurier account is connected to the Google user (nor registered with its
-        e-mail), the callback redirects to `failedReturnLink` with `PLATFORM_ACCOUNT_NOT_REGISTERED` — use `POST /v1/auth/register/google`
-        instead.
+        Log-in also signs up a Google user who has no account: when no GlobKurier account is connected to the Google user
+        (nor registered with its e-mail), the callback creates one from the Google data and answers like a registration
+        (`accountCreated=1&platform=google`). While that is switched off, the callback redirects to `failedReturnLink` with
+        `PLATFORM_ACCOUNT_NOT_REGISTERED` instead — use `POST /v1/auth/register/google` then.
 
         Intended for browser (form) submission. No validation happens in this step - the return links are validated on the
         callback.
