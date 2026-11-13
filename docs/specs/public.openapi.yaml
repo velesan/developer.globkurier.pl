@@ -3822,7 +3822,11 @@ paths:
 
         Rejected when the order does not exist, is paid or cancelled, the current payment is not a waiting bank-transfer/online
 
-        payment, or the chosen method is unavailable / outside its limits.
+        payment, or the chosen method is unavailable / outside its limits. An online payment cancelled after its validity
+
+        (default 5 minutes, set once and also sent to the gateway as `validTo`) or rejected by the gateway can be paid again: the order
+
+        gets a new waiting payment. A cancelled bank transfer is still rejected.
 
         Sets a `paymentReturnLink` cookie (15 min) used by `/v1/onlinePayment/redirect`; send Ajax calls `withCredentials`.
 
@@ -5897,7 +5901,7 @@ paths:
       summary: Pay the order behind the "pay" link
       description: 'Pays the order taken from the token through the same order payment as
         `/v1/onlinePayment/generateForm/order` (a bank transfer order becomes an online payment, a second call reuses
-        the transaction of the first one) and returns the gateway form. The amount never comes from the request.
+        the transaction of the first one until it is cancelled, after that a new payment is created) and returns the gateway form. The amount never comes from the request.
 
         Sets the `paymentReturnLink` cookie (15 min) used by `/v1/onlinePayment/redirect`; send Ajax calls `withCredentials`.
         The return links go to the gateway, the cookie and the request log unmasked: a link containing the token, also
@@ -15253,8 +15257,8 @@ components:
           - PAYABLE
           - PAID
           - NOT_PAYABLE
-          description: '`PAYABLE` = show the "Pay" button; `PAID` = already paid; `NOT_PAYABLE` = cancelled order or a
-            payment method that is not paid online.'
+          description: '`PAYABLE` = show the "Pay" button (also when an earlier online payment expired or was rejected);
+            `PAID` = already paid; `NOT_PAYABLE` = cancelled order or a payment method that is not paid online.'
     OrderPaymentLinkSummaryRequest:
       type: object
       required:
@@ -20429,6 +20433,10 @@ components:
           type: string
           nullable: true
           description: Cancellation time (CANCELED only), `YYYY-MM-DDTHH:MM:SS`.
+        dateOfRefund:
+          type: string
+          nullable: true
+          description: Time the money of a paid payment was returned (CANCELED only, null when the payment was cancelled without a refund) - refunded by the payment provider for an online payment, or returned to the prepaid balance for a prepaid payment, `YYYY-MM-DDTHH:MM:SS`.
     PaymentUserPayment:
       type: object
       properties:
