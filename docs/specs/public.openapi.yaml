@@ -7904,6 +7904,16 @@ paths:
           enum:
           - '0'
           - '1'
+      - name: filters[hasCarrierError]
+        in: query
+        description: 1 - only orders the carrier refused (still waiting for a shipment and the latest order event is an
+          error — what the `hasCarrierError` of a row shows; the latest event is the one with the highest id), 0 - all
+          the others. What the user may correct on such an order is in `GET /v1/user/order/{orderNumber}/correction`.
+        schema:
+          type: string
+          enum:
+          - '0'
+          - '1'
       - name: filters[transportType]
         in: query
         description: Transport type group. `NON_CROSSBORDER` excludes cross-border products.
@@ -8843,6 +8853,39 @@ paths:
       security:
       - {}
       - tokenAuth: []
+  /v1/products/additionalFilters:
+    get:
+      operationId: productGetAdditionalFilters
+      tags:
+      - Products
+      summary: Get additional product search filters
+      description: 'Returns the option lists for product search filters: package type groups (`DOX`, `PARCEL`, `PALLET`),
+
+        transport type groups (`ROAD`, `AIR`, `CROSSBORDER`), collection and delivery types (`PICKUP`, `POINT`,
+
+        `CROSSBORDER`) with translated labels and icons, and time-definite delivery addon types (`MORNING_DELIVERY`,
+
+        `NOON_DELIVERY`, `EVENING_DELIVERY`, `LATE_EVENING_DELIVERY`, `DELIVERY_GUARANTEED`) with translated labels.
+
+        A time-definite delivery key is an addon type: an offer from `GET /v1/products` matches it when its
+
+        `addonsCategories` contain the key. `GET /v1/products` does not change: the client filters the offers it
+
+        already received by `addonsCategories` (GLOBKURIER-10379).
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/AcceptLanguage'
+      responses:
+        '200':
+          description: Filter options.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductAdditionalFilters'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+      security: []
   /v1/products/pricing:
     get:
       operationId: productGetPricingTable
@@ -12768,6 +12811,505 @@ paths:
                 $ref: '#/components/schemas/UserProxyErrorV2'
         '401':
           $ref: '#/components/responses/Unauthorized'
+  /v1/user/order/{orderNumber}/correction:
+    get:
+      operationId: orderCorrectionGet
+      tags:
+      - Order Management
+      summary: What the customer may correct on an order the carrier refused
+      description: 'The state of the correction of an order of the caller''s account (a sub-account sees only its own
+        orders; the main account also those of its sub-accounts). `fixable`: the carrier named fields the customer may
+        correct himself (`fields`, with the value the order stores and a `suggestion` or null) and he still has attempts. `not_fixable`: the support
+        has to help (an error the customer cannot fix, or `maxAttempts` used). `submitted`: the customer''s correction is
+        saved and the order waits for the carrier (still a new order, no waybill, the latest event is no error, and
+        `attempts` is at least 1); nothing to do until the carrier refuses it again, and then the state is `fixable`
+        again (or `not_fixable` when the support has to help). `closed`: nothing to correct — the order is no longer
+        waiting for a shipment, has a waybill, or has no open carrier error and nobody corrected it. A `PUT` while `submitted`
+        answers 409 `stale`. `eventId` is the carrier refusal
+        being answered, to be sent back with the correction. Only these fields can ever be named: sender and receiver name,
+        street, house number, apartment number, phone, e-mail; country, post code and city are corrected by the support.
+        An order that is not the caller''s, an unknown one, and every order while the feature is switched off answer 404.
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/AcceptLanguage'
+      - name: orderNumber
+        in: path
+        required: true
+        description: GK order number.
+        schema:
+          type: string
+          pattern: '^[A-Za-z0-9]+$'
+          example: GK000000000PL
+      responses:
+        '200':
+          description: The state of the correction.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - state
+                - eventId
+                - attempts
+                - maxAttempts
+                - fields
+                - aiExplanation
+                properties:
+                  state:
+                    type: string
+                    enum:
+                    - fixable
+                    - not_fixable
+                    - submitted
+                    - closed
+                  eventId:
+                    type: integer
+                    description: The carrier refusal being answered; 0 when `state` is `submitted` or `closed`.
+                  attempts:
+                    type: integer
+                    description: Corrections already saved for the order.
+                  maxAttempts:
+                    type: integer
+                    example: 3
+                  fields:
+                    type: array
+                    description: The fields to correct; empty unless `state` is `fixable`.
+                    items:
+                      type: object
+                      required:
+                      - field
+                      - currentValue
+                      - suggestion
+                      - suggestionOrigin
+                      - reasonKey
+                      - reason
+                      properties:
+                        field:
+                          type: string
+                          enum:
+                          - senderName
+                          - senderStreet
+                          - senderHouseNumber
+                          - senderApartmentNumber
+                          - senderPhone
+                          - senderEmail
+                          - receiverName
+                          - receiverStreet
+                          - receiverHouseNumber
+                          - receiverApartmentNumber
+                          - receiverPhone
+                          - receiverEmail
+                        currentValue:
+                          type: string
+                        suggestion:
+                          type: string
+                          nullable: true
+                          description: 'A value the rules suggest for the field, or null. It follows from the stored value (spaces
+                            collapsed, `12/3` split into house and apartment number, `m. 5` read as `5`, a name shortened at a
+                            word to the length the carrier named, a phone number without separators, an e-mail address without
+                            spaces); where the rules have none, a value of the AI diagnosis of this refusal (see `suggestionOrigin`).
+                            Either way it is a value the correction itself accepts. Send it back as the value with
+                            `suggestionAccepted: true` to accept it, or send your own.'
+                        suggestionOrigin:
+                          type: string
+                          nullable: true
+                          enum:
+                          - rule
+                          - ai
+                          - null
+                          description: Who made `suggestion`, `null` while there is none. `ai` only while the AI suggestions are
+                            switched on and the diagnosis has a status the panel setting shows; a value of the AI is
+                            accepted the same way as one of the rules and is counted separately in the audit.
+                        reasonKey:
+                          type: string
+                          enum:
+                          - ORDER.CORRECTION.REASON.MISSING
+                          - ORDER.CORRECTION.REASON.INVALID
+                          - ORDER.CORRECTION.REASON.TOO_LONG
+                          - ORDER.CORRECTION.REASON.UNSPECIFIED
+                          description: Why the field is wrong, as a key the front translates (what the carrier's message says is
+                            wrong with it, or `UNSPECIFIED` when it names the field only). Always there, whatever the AI setting.
+                        reason:
+                          type: string
+                          description: The same reason as one plain sentence in Polish, ready to show next to the field (the
+                            limit the carrier named is in it for a value that is too long). Not to be confused with the
+                            `reason` of a 409 answer, which is a code.
+                          example: Przewoźnik zgłosił, że w polu „numer domu odbiorcy” brakuje wartości. Uzupełnij je.
+                  aiExplanation:
+                    type: object
+                    nullable: true
+                    description: What the AI diagnosis tells the customer about the refusal, or `null` while it is switched
+                      off, has not come yet, has a status the panel setting does not show, or has no text fit to show
+                      (the text is plain, with markup and scheme:// or www addresses removed, at most 500 and 300
+                      characters; show it escaped and do not turn it into links). It is written in the language of the
+                      diagnosis (Polish). The suggestions of the fields do not depend on it.
+                    required:
+                    - explanation
+                    - nextStep
+                    properties:
+                      explanation:
+                        type: string
+                        description: Why the carrier refused the shipment.
+                      nextStep:
+                        type: string
+                        description: What the customer should do.
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: orderCorrectionPut
+      tags:
+      - Order Management
+      summary: Correct an order the carrier refused
+      description: 'Saves the customer''s correction and hands the order back to the shipment queue. The body is checked first
+        (400): a field name outside the list below, a value that is not a string, a missing value (every field needs one
+        except an apartment number, which may be cleared), a value over the length the order stores (name 64, street 100,
+        house and apartment number 50, phone 50, e-mail 100), a phone number with characters other than digits, spaces and
+        `+ - ( ) .` or with fewer than 5 digits, an invalid e-mail address, a house number other than Latin letters A-Z and digits
+        with at most one `/` (e.g. `15/17`; the same format the order creation requires, message "House number may contain
+        letters, digits and one / (e.g. 15/17). Enter the apartment number in a separate field."; the apartment number has
+        no such format), and a character outside the Basic Multilingual
+        Plane (an emoji), which the order cannot store. Then the order is checked (409 with a `reason`): only the fields
+        the carrier flagged (`fields` of the GET) can be sent — a known field that was not flagged is `field_not_flagged`;
+        `eventId` is the one the GET returned, so an answer to an error that has been replaced meanwhile, or one that was
+        answered already (a repeated request), is `stale`; a body whose values are all the stored ones is `no_change` and
+        spends no attempt; an order whose pickup date has passed (it waited for the correction, and the customer cannot
+        change the date) is `pickup_date_passed` and spends no attempt either, and the GET then reports `not_fixable`; a name longer than the limit the carrier named in
+        its refusal (`(>50)`, see `nameLengthRestriction`) is `name_too_long` and spends no attempt, though the order could
+        store up to 64 characters.
+        A value the carrier still refuses brings the order back to the customer; after `maxAttempts`
+        corrections the support takes over (`attempts_exceeded`). A value is trimmed of spaces before the checks,
+        including no-break and other Unicode spaces. While the feature is switched off every request, also one with a
+        malformed body, is 404. Everything is checked on the server, whatever the front
+        end showed, and the last checks run under the lock of the order, so two requests at once cannot both pass.
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/AcceptLanguage'
+      - name: orderNumber
+        in: path
+        required: true
+        description: GK order number.
+        schema:
+          type: string
+          pattern: '^[A-Za-z0-9]+$'
+          example: GK000000000PL
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - eventId
+              - fields
+              properties:
+                eventId:
+                  type: integer
+                  minimum: 1
+                fields:
+                  type: object
+                  minProperties: 1
+                  description: 'Keyed by field name, each value an object. The names are `senderName`, `senderStreet`,
+                    `senderHouseNumber`, `senderApartmentNumber`, `senderPhone`, `senderEmail` and the same with `receiver`
+                    (OpenAPI 3.0 cannot enumerate property names); any other name is a 400.'
+                  additionalProperties:
+                    type: object
+                    required:
+                    - value
+                    properties:
+                      value:
+                        type: string
+                        example: 12A
+                      suggestionAccepted:
+                        type: boolean
+                        default: false
+                        description: '`true` when the value is a suggestion the customer accepted without a change.'
+      responses:
+        '204':
+          description: Saved; the order went back to the shipment queue.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          description: The correction cannot be saved; `reason` says why.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - reason
+                properties:
+                  reason:
+                    type: string
+                    enum:
+                    - window_closed
+                    - stale
+                    - no_change
+                    - not_fixable
+                    - field_not_flagged
+                    - attempts_exceeded
+                    - pickup_date_passed
+                    - name_too_long
+  /v1/user/order/{orderNumber}/nameLengthRestriction:
+    get:
+      operationId: orderNameLengthRestrictionGet
+      tags:
+      - Order Management
+      summary: How many characters a name of an order may have
+      description: 'The most characters the sender or the receiver name of an order may have, so the correction form can
+        stop the customer before the carrier refuses the order again. **No login needed**: the page of the link of the mail
+        has no session, and the answer is one number, no personal data. It is the limit the carrier named in its latest
+        refusal (`Pole "Imię" jest za długie (>50)`); the latest refusal counts, not the latest event, so the limit stays
+        after a correction. When the latest refusal names no limit, the order was never refused, or the order is unknown,
+        it is the length the order stores (64), so an unknown order cannot be told from an order with no named limit (a
+        limit other than 64 does tell that the order was refused for the length of a name). Only the whole correction
+        being switched off answers 404. The anonymous rate limit of the API applies.
+
+        '
+      security: []
+      parameters:
+      - $ref: '#/components/parameters/AcceptLanguage'
+      - name: orderNumber
+        in: path
+        required: true
+        description: GK order number.
+        schema:
+          type: string
+          pattern: '^[A-Za-z0-9]+$'
+          example: GK000000000PL
+      responses:
+        '200':
+          description: The limit of a name.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - maxLength
+                properties:
+                  maxLength:
+                    type: integer
+                    description: The most characters a name may have.
+                    example: 50
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /v1/order-correction:
+    get:
+      operationId: orderCorrectionByLinkGet
+      tags:
+      - Order Management
+      summary: What the customer may correct, from the link of the mail (no login)
+      description: 'The same state of the correction as `GET /v1/user/order/{orderNumber}/correction`, for the page the link of
+        the e-mail about a refused order opens, **without logging in**. The mail links to a page of the front end with the
+        token as the last segment of its path (`https://…/order-correction/<token>`); the page reads it and sends it here in the header
+        `x-correction-token`. It is a header, never the query string or the path: an address reaches every access log and
+        `Referer`, and a token in the query string is no token (404).
+
+
+        The token is bound to one order and to the refusal it was issued for, lives 24 hours and is used up by the
+        correction that answers the refusal (`PUT /v1/order-correction`, or the correction made by logging in). Only the
+        number of the order and the fields the carrier flagged are returned, nothing else of the order. `state`, `fields`,
+        `eventId` and `aiExplanation` mean what they mean in the logged-in endpoint; `closed` says the order is no longer
+        waiting for a correction and the page should send the customer to the support. A saved correction uses the token
+        up, so the same token then answers 404, not `submitted` (that value belongs to the logged-in endpoint).
+
+
+        A token that is unknown, expired, used up or issued for a refusal that a newer one replaced, a missing header,
+        and the whole feature being switched off (`ORDER_CORRECTION_ENABLED` or `ORDER_CORRECTION_EMAIL_ENABLED` not 1) all
+        answer the same empty 404. The answer
+        is never cached (`Cache-Control: no-store`). The anonymous rate limit of the API applies.
+
+        '
+      security: []
+      parameters:
+      - $ref: '#/components/parameters/CorrectionToken'
+      responses:
+        '200':
+          description: The state of the correction.
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                example: no-store, private
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - orderNumber
+                - state
+                - eventId
+                - attempts
+                - maxAttempts
+                - fields
+                - aiExplanation
+                properties:
+                  orderNumber:
+                    type: string
+                    description: GK number of the order, as the mail names it.
+                    example: GK000000000PL
+                  state:
+                    type: string
+                    enum:
+                    - fixable
+                    - not_fixable
+                    - closed
+                  eventId:
+                    type: integer
+                    description: The carrier refusal being answered; 0 when `state` is `closed`. Send it back with the correction.
+                  attempts:
+                    type: integer
+                    description: Corrections already saved for the order, by the account or by a link.
+                  maxAttempts:
+                    type: integer
+                    example: 3
+                  fields:
+                    type: array
+                    description: The fields to correct; empty unless `state` is `fixable`. Each item is the one of
+                      `GET /v1/user/order/{orderNumber}/correction` (`field`, `currentValue`, `suggestion`, `suggestionOrigin`,
+                      `reasonKey`, `reason`).
+                    items:
+                      type: object
+                      required:
+                      - field
+                      - currentValue
+                      - suggestion
+                      - suggestionOrigin
+                      - reasonKey
+                      - reason
+                      properties:
+                        field:
+                          type: string
+                          enum:
+                          - senderName
+                          - senderStreet
+                          - senderHouseNumber
+                          - senderApartmentNumber
+                          - senderPhone
+                          - senderEmail
+                          - receiverName
+                          - receiverStreet
+                          - receiverHouseNumber
+                          - receiverApartmentNumber
+                          - receiverPhone
+                          - receiverEmail
+                        currentValue:
+                          type: string
+                        suggestion:
+                          type: string
+                          nullable: true
+                        suggestionOrigin:
+                          type: string
+                          nullable: true
+                          enum:
+                          - rule
+                          - ai
+                          - null
+                        reasonKey:
+                          type: string
+                          enum:
+                          - ORDER.CORRECTION.REASON.MISSING
+                          - ORDER.CORRECTION.REASON.INVALID
+                          - ORDER.CORRECTION.REASON.TOO_LONG
+                          - ORDER.CORRECTION.REASON.UNSPECIFIED
+                        reason:
+                          type: string
+                          description: The reason as one plain sentence in Polish (not the `reason` code of a 409).
+                  aiExplanation:
+                    type: object
+                    nullable: true
+                    description: What the AI diagnosis tells the customer, or `null`; plain text, show it escaped.
+                    required:
+                    - explanation
+                    - nextStep
+                    properties:
+                      explanation:
+                        type: string
+                      nextStep:
+                        type: string
+        '404':
+          $ref: '#/components/responses/NotFound'
+    put:
+      operationId: orderCorrectionByLinkPut
+      tags:
+      - Order Management
+      summary: Correct an order the carrier refused, from the link of the mail (no login)
+      description: 'The same correction as `PUT /v1/user/order/{orderNumber}/correction` (same body, same checks, same limit of
+        `maxAttempts` corrections for the order however they were made, same audit), for the page the link of the e-mail opens,
+        **without logging in**. The order is the one the token was issued for, and `eventId` must be the refusal it was issued
+        for (the GET returns it), otherwise 409 `stale`.
+
+
+        The token is checked before the body: an unknown, expired, used up or replaced token, a missing header and the
+        feature being switched off are the same empty 404, also for a malformed body. A body that is not valid is the usual
+        400 with the violations and does not use the token up; neither does a 409. A saved correction (204) uses the token up,
+        so the link works once.
+
+        '
+      security: []
+      parameters:
+      - $ref: '#/components/parameters/CorrectionToken'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+              - eventId
+              - fields
+              properties:
+                eventId:
+                  type: integer
+                  minimum: 1
+                fields:
+                  type: object
+                  minProperties: 1
+                  description: 'Keyed by field name, each value an object, exactly as in `PUT /v1/user/order/{orderNumber}/correction`.'
+                  additionalProperties:
+                    type: object
+                    required:
+                    - value
+                    properties:
+                      value:
+                        type: string
+                        example: 12A
+                      suggestionAccepted:
+                        type: boolean
+                        default: false
+      responses:
+        '204':
+          description: Saved; the order went back to the shipment queue and the token is used up.
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          description: The correction cannot be saved; `reason` says why. The token stays alive.
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                - reason
+                properties:
+                  reason:
+                    type: string
+                    enum:
+                    - window_closed
+                    - stale
+                    - no_change
+                    - not_fixable
+                    - field_not_flagged
+                    - attempts_exceeded
+                    - pickup_date_passed
+                    - name_too_long
   /v1/user/partnerProgram:
     get:
       operationId: partnerProgramGetSummary
@@ -14097,6 +14639,20 @@ components:
       name: X-Auth-Token
       description: Token returned by `POST /v1/auth/login`.
   parameters:
+    CorrectionToken:
+      name: x-correction-token
+      in: header
+      required: true
+      description: 'The token from the link in the e-mail about a refused order (the last segment of its path). A header
+        only, never the query string or the path. Unknown, expired, used up and missing are the same 404 (a call without
+        the header is answered, not rejected: the server does not answer 400 for it). The pattern is informational: the
+        server only checks the length.'
+      schema:
+        type: string
+        minLength: 1
+        maxLength: 128
+        pattern: '^[A-Za-z0-9_-]+$'
+        example: Wq3z0Gx8Qk1m5sYb2nV7cDfH4jLpRtUa9eXoIiKgMhE
     AcceptLanguage:
       name: Accept-Language
       in: header
@@ -16726,6 +17282,13 @@ components:
         status:
           type: string
           example: NEW
+        statusHistory:
+          type: array
+          description: Statuses the order went through, oldest first in the order they were recorded, from the status
+            it was created with. The position in the list gives the order of the changes, not `enteredAt`, which comes
+            from more than one clock and may step back.
+          items:
+            $ref: '#/components/schemas/OrderStatusHistoryEntry'
         purpose:
           type: string
           nullable: true
@@ -16745,10 +17308,24 @@ components:
         hasCarrierError:
           type: boolean
           nullable: true
-          description: Errors occurred while creating the order at the carrier.
+          description: Errors occurred while creating the order at the carrier. True while the order still waits for a
+            shipment and its latest order event (the one with the highest id) is an error.
         paymentId:
           type: integer
           nullable: true
+          description: Payment type id.
+        paymentStatus:
+          $ref: '#/components/schemas/OrderPaymentStatus'
+        currentPaymentId:
+          type: integer
+          nullable: true
+          description: 'Identifier of the order''s current payment (`filters[id]` of `GET /v1/user/payments`). It changes
+            as payments of the order are started, retried, confirmed or recorded by customer service, and it can point
+            at an older, e.g. cancelled, payment of a paid order - `paymentStatus` tells whether the order is paid. Null
+            when the order has no current payment: deferred bank transfer and coupon orders are created without one.
+            The order''s other payments (customs duty, fees) are listed by `filters[orderNumber]`. Not to be confused
+            with `paymentId`, the payment type.'
+          example: 305223
         originId:
           type: string
           nullable: true
@@ -17601,6 +18178,33 @@ components:
       - CUSTOMS_CLEARANCE_ISSUE
       - REQUIRES_CLARIFICATION
       - AWAITING_CARRIER_CANCELLATION
+    OrderPaymentStatus:
+      type: string
+      nullable: true
+      enum:
+      - WAITING
+      - COMPLETED
+      - CANCELED
+      - DEFERRED
+      - null
+      description: 'The order''s payment status, the same in the order list and the order details. `COMPLETED` when the
+        order is paid: its current payment is completed or another completed shipment payment of the order exists
+        (customs duty, fees and payments taken from the prepaid balance do not count); otherwise `WAITING` / `CANCELED` is the status of the
+        order''s current payment; `DEFERRED` a deferred bank transfer order (`paymentId` 4) without a current payment
+        (an order switched to deferred bank transfer later keeps its previous payment and shows its status); null - no
+        current payment and not a deferred bank transfer (e.g. coupon).'
+      example: DEFERRED
+    OrderStatusHistoryEntry:
+      type: object
+      description: A status the order entered and when. Consecutive records of the same status are listed once, with
+        the time the order entered it; a status the order enters again later is listed again.
+      properties:
+        status:
+          $ref: '#/components/schemas/OrderShipmentStatus'
+        enteredAt:
+          type: string
+          description: '`Y-m-d H:i:s`, when the order entered the status.'
+          example: '2027-01-13 10:15:00'
     OrderCrossBorderStatusFilter:
       type: string
       enum:
@@ -17718,6 +18322,13 @@ components:
           example: GK000000000PL
         status:
           $ref: '#/components/schemas/OrderShipmentStatus'
+        statusHistory:
+          type: array
+          description: Statuses the order went through, oldest first in the order they were recorded, from the status
+            it was created with. The position in the list gives the order of the changes, not `enteredAt`, which comes
+            from more than one clock and may step back.
+          items:
+            $ref: '#/components/schemas/OrderStatusHistoryEntry'
         creationDate:
           type: string
           description: '`Y-m-d H:i:s`'
@@ -17777,9 +18388,7 @@ components:
           type: integer
           description: Payment type id.
         paymentStatus:
-          type: string
-          nullable: true
-          example: DEFERRED
+          $ref: '#/components/schemas/OrderPaymentStatus'
         pickup:
           type: object
           properties:
@@ -18237,6 +18846,44 @@ components:
         image:
           type: string
           description: Icon URL.
+    ProductFilterOption:
+      type: object
+      properties:
+        key:
+          type: string
+        trans:
+          type: string
+        image:
+          type: string
+          nullable: true
+          description: Only for collectionType/deliveryType.
+    ProductAdditionalFilters:
+      type: object
+      properties:
+        additionalFilters:
+          type: object
+          properties:
+            packageType:
+              type: array
+              items:
+                $ref: '#/components/schemas/ProductFilterOption'
+            transportType:
+              type: array
+              items:
+                $ref: '#/components/schemas/ProductFilterOption'
+            collectionType:
+              type: array
+              items:
+                $ref: '#/components/schemas/ProductFilterOption'
+            deliveryType:
+              type: array
+              items:
+                $ref: '#/components/schemas/ProductFilterOption'
+            timeDefiniteDelivery:
+              type: array
+              description: Time-definite delivery addon types; `key` is matched against `addonsCategories` of an offer.
+              items:
+                $ref: '#/components/schemas/ProductFilterOption'
     ProductSearchResult:
       type: object
       properties:
