@@ -19744,6 +19744,23 @@ components:
           type: string
           maxLength: 100
           description: Special registration link name assigning a dedicated price list / account manager.
+        currency:
+          type: string
+          nullable: true
+          enum:
+          - PLN
+          - EUR
+          - USD
+          - GBP
+          - CZK
+          - HUF
+          - RON
+          - RUB
+          - null
+          default: PLN
+          description: Account currency set at registration (case-sensitive ISO 4217 code). Omitted or `null` gives `PLN`.
+            Independent of the `X-Currency` header, which does not change the account currency.
+          example: EUR
         grantCouponIds:
           type: array
           uniqueItems: true
@@ -21456,6 +21473,21 @@ components:
           description: Counters per currency, `X-Currency` first (not present for credit counters).
           items:
             $ref: '#/components/schemas/UserStatsValue'
+    UserStatsCreditLimit:
+      allOf:
+      - $ref: '#/components/schemas/UserStatsSummary'
+      - type: object
+        required:
+        - rate
+        properties:
+          rate:
+            type: number
+            description: Exchange rate used to convert the credit limit from the currency it was granted in to the `X-Currency`
+              currency (`value` = limit x `rate`, rounded to the decimal places of the currency, so use `value` for amounts).
+              The same rate converts `creditUsed` and `creditAvailable`. `1` when both are the same currency or the account
+              has no credit (no credit currency set). An account that has a credit currency but a zero limit still gets the
+              rate of the currency pair, because `creditUsed` is converted with it.
+            example: 4.5
     UserStats:
       type: object
       properties:
@@ -21472,7 +21504,7 @@ components:
         excessPayment:
           $ref: '#/components/schemas/UserStatsSummary'
         creditLimit:
-          $ref: '#/components/schemas/UserStatsSummary'
+          $ref: '#/components/schemas/UserStatsCreditLimit'
         creditUsed:
           $ref: '#/components/schemas/UserStatsSummary'
         creditAvailable:
@@ -21984,6 +22016,7 @@ components:
       - phonePrefix
       - postCodeSamples
       - phoneVerification
+      - currency
       properties:
         id:
           type: integer
@@ -22016,6 +22049,19 @@ components:
           nullable: true
         phoneVerification:
           type: boolean
+        currency:
+          type: string
+          enum:
+          - PLN
+          - EUR
+          - USD
+          - GBP
+          - CZK
+          - HUF
+          - RON
+          - RUB
+          description: Suggested account currency for customers from this country (USD unless configured).
+          example: USD
     CustomsDeclarationConfigV2:
       type: object
       required:
