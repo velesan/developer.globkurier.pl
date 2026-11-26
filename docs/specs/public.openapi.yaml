@@ -786,6 +786,77 @@ paths:
               schema:
                 type: string
       security: []
+  /v1/brand/carrier/{name}:
+    get:
+      operationId: carrierLogoR01
+      tags:
+      - Carriers
+      summary: Carrier logo image
+      description: 'Returns the logo image (PNG, JPEG, GIF or WebP; `Content-Type` is the image type) that the `logo` field of `GET /v1/carriers` points to.
+
+        `name` is the logo file name from that URL (`<number>.png`). The image is cacheable for 24 hours, a missing
+
+        logo (404) for 5 minutes.
+
+        Available without authentication and not counted by the anonymous rate limit.
+
+        '
+      x-proxied-to: /public/v2/brand/carrier/{name}
+      parameters:
+      - name: name
+        in: path
+        required: true
+        description: Logo file name, a number of up to 6 digits without leading zeros followed by `.png`.
+        schema:
+          type: string
+          pattern: ^[1-9]\d{0,5}\.png$
+          example: 129.png
+      responses:
+        '200':
+          description: The logo image.
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                example: max-age=86400, public
+            X-Content-Type-Options:
+              schema:
+                type: string
+                example: nosniff
+          content:
+            image/png:
+              schema:
+                type: string
+                format: binary
+            image/jpeg:
+              schema:
+                type: string
+                format: binary
+            image/gif:
+              schema:
+                type: string
+                format: binary
+            image/webp:
+              schema:
+                type: string
+                format: binary
+        '404':
+          description: No such logo (or a file name that does not match the pattern). Empty body.
+          headers:
+            Cache-Control:
+              description: Only when the logo does not exist; a file name that does not match the pattern is not cacheable.
+              schema:
+                type: string
+                example: max-age=300, public
+            X-Content-Type-Options:
+              description: Only when the logo does not exist, as with `Cache-Control`.
+              schema:
+                type: string
+                example: nosniff
+        '500':
+          description: The logo source answered with something that is not a PNG, JPEG, GIF or WebP image, with an empty
+            body, or failed or timed out. Not cached, so the next call asks again.
+      security: []
   /v1/carriers:
     get:
       operationId: carrierListR01
@@ -860,7 +931,7 @@ paths:
                 carriers:
                 - carrierName: ExampleCarrier
                   brandName: Example Carrier
-                  logo: v2/brand/carrier/1.png
+                  logo: https://api.globkurier.pl/v1/brand/carrier/1.png
                   zones:
                   - domestic
                   - international
@@ -4123,6 +4194,16 @@ paths:
         in the recording mode (a switch of the operations team, not a request parameter), such a number is accepted and
         stored as typed instead of being refused.
 
+        - An order to Great Britain (England, Scotland, Wales; not Northern Ireland, which follows the EU customs rules)
+        that carries a customs declaration validated by the customs form (a route with a customs configuration for the
+        carrier and content that needs clearance) and whose customs value is more than 135.00 GBP (the sum of
+        `customs[commodities][].subTotalValue` in `customs[currency]`, PLN when it is missing, converted at the latest
+        exchange rate published on or before today) needs the receiver EORI: without it (missing, empty or whitespace only)
+        the order is refused with `400` at `customs[receiver][eori]`. The rule covers the carriers configured for it
+        (currently Spring) and is judged by the receiver country only. An order without a customs declaration is not
+        checked; a declaration in an unknown currency, or one no exchange rate is available for, is skipped (logged on
+        our side) and needs no receiver EORI.
+
 
         The order is queued for creation at the carrier asynchronously; the response contains the order number, hash and its
         pricing.
@@ -4225,7 +4306,11 @@ paths:
         \ is the number of packages.\n- `CASH_ON_DELIVERY` without `INSURANCE` adds insurance for the same value; for logged-in\
         \ users a COD with only `value` is completed with the bank data from the profile.\n- An address may be given as one\
         \ line in `fullAddress`; it is geocoded and must resolve to exactly one street address (within `country`\
-        \ when given).\n\nModes (query parameters):\n\
+        \ when given).\n- An order to Great Britain (England, Scotland, Wales; not Northern Ireland) that carries a customs\
+        \ declaration validated by the customs form and whose customs value is more than 135.00 GBP needs the receiver EORI:\
+        \ without it the order is refused with `400` at `customs[receiver][eori]`, by the same rule as `POST /v1/order`\
+        \ (carriers configured for it, currently Spring; no declaration = not checked; unknown currency or no exchange\
+        \ rate = skipped).\n\nModes (query parameters):\n\
         - `onlyPricing=true` - no order is created; the response is the price of the matched offer (`200`).\n- `createFully=true`\
         \ - the order is also registered at the carrier synchronously (requires payment PREPAID, BANK_TRANSFER_DEFERRED, NKO\
         \ or COLLECTIVE_PREPAID);\n  the response then includes the tracking number and the label (`201`), or the order data\
@@ -6078,6 +6163,10 @@ paths:
         Post codes are required only for countries with `hasPostCodes`; a state may be sent only for countries with `hasStates`
 
         (otherwise it must be empty). Unknown query parameters are rejected with `400`.
+
+        Days blocked by the carrier''s holiday calendar for the product are not returned; when the requested date is one of
+        them, the following days are offered when there are any (the list can be empty when the whole checked window is
+        blocked). If the calendar cannot be read, the failure is logged and nothing is blocked.
 
         '
       parameters:
@@ -8223,7 +8312,18 @@ paths:
 
         this rule returns `400` with a general error `Invalid parameters`. A search by `postCode` or `city` without
 
-        `isCashOnDeliveryAddonSelected` treats it as `false`. `filter` does a fuzzy match on point data; `type` keeps only APM or PUDO points; `side=SENDER`
+        `isCashOnDeliveryAddonSelected` treats it as `false`.
+
+        The search looks around one spot, taken in this order: `latitude`+`longitude`; a `filter` that is a post code of
+        the requested country; `postCode` (with `city`); `city` alone. The spot is geocoded and points within `distance`
+        km come back nearest first, each with its `distanceInMeters`. With coordinates the post code is derived from
+        them (the post code of that place); the request `postCode` is used only when none is found there. A post code
+        counts as placed only when
+        the geocoder confirms it; otherwise, or when geocoding fails, the search falls back to the post code alone and
+        `distanceInMeters` is null. The search by coordinates may be switched off on the server; then it is a search by
+        `postCode` as before.
+
+        `filter` does a fuzzy match on point data; `type` keeps only APM or PUDO points; `side=SENDER`
 
         drops points that do not accept parcels from senders. `addressType` is passed to the carrier and echoed in each point.
 
@@ -8262,24 +8362,56 @@ paths:
           default: false
       - name: postCode
         in: query
-        description: Return points at or near this post code.
+        description: Return points around this post code (geocoded; with `city` the geocoder gets both).
         schema:
           type: string
         example: 00-001
       - name: city
         in: query
-        description: Return points in this city.
+        description: 'Deprecated: gk no longer filters points by it. It helps to geocode `postCode`; without `postCode`
+          the city itself is geocoded and points around it are returned. When the search has coordinates (sent or
+          geocoded) the city is not passed to the carrier; otherwise it is, and some carriers then return only points in
+          exactly that city. Use `latitude`/`longitude` instead.'
+        deprecated: true
         schema:
           type: string
           minLength: 3
           maxLength: 30
       - name: filter
         in: query
-        description: Space-separated words fuzzy-matched against point data; no punctuation.
+        description: Space-separated words fuzzy-matched against point data; no punctuation. A value that is a post code
+          of the requested country (`countryId`) is not fuzzy-matched - points around that post code are returned instead.
         schema:
           type: string
           minLength: 3
           maxLength: 50
+      - name: latitude
+        in: query
+        description: Return points around this spot, nearest first. Must be sent together with `longitude`; takes
+          precedence over `postCode`, `city` and a post code in `filter` - the post code passed to the carrier is the
+          one of the place at these coordinates, or `postCode` when no post code is found there.
+        schema:
+          type: number
+          minimum: -90
+          maximum: 90
+        example: 52.2297
+      - name: longitude
+        in: query
+        description: Longitude of the spot, together with `latitude`.
+        schema:
+          type: number
+          minimum: -180
+          maximum: 180
+        example: 21.0122
+      - name: distance
+        in: query
+        description: Search radius in kilometres around the spot (coordinates, or a geocoded post code or city).
+          Ignored when the spot cannot be geocoded.
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 50
+          default: 10
       - name: addressType
         in: query
         description: Point role requested from the carrier.
@@ -8371,24 +8503,56 @@ paths:
           default: false
       - name: postCode
         in: query
-        description: Return points at or near this post code.
+        description: Return points around this post code (geocoded; with `city` the geocoder gets both).
         schema:
           type: string
         example: 00-001
       - name: city
         in: query
-        description: Return points in this city.
+        description: 'Deprecated: gk no longer filters points by it. It helps to geocode `postCode`; without `postCode`
+          the city itself is geocoded and points around it are returned. When the search has coordinates (sent or
+          geocoded) the city is not passed to the carrier; otherwise it is, and some carriers then return only points in
+          exactly that city. Use `latitude`/`longitude` instead.'
+        deprecated: true
         schema:
           type: string
           minLength: 3
           maxLength: 30
       - name: filter
         in: query
-        description: Space-separated words fuzzy-matched against point data; no punctuation.
+        description: Space-separated words fuzzy-matched against point data; no punctuation. A value that is a post code
+          of the requested country (`countryId`) is not fuzzy-matched - points around that post code are returned instead.
         schema:
           type: string
           minLength: 3
           maxLength: 50
+      - name: latitude
+        in: query
+        description: Return points around this spot, nearest first. Must be sent together with `longitude`; takes
+          precedence over `postCode`, `city` and a post code in `filter` - the post code passed to the carrier is the
+          one of the place at these coordinates, or `postCode` when no post code is found there.
+        schema:
+          type: number
+          minimum: -90
+          maximum: 90
+        example: 52.2297
+      - name: longitude
+        in: query
+        description: Longitude of the spot, together with `latitude`.
+        schema:
+          type: number
+          minimum: -180
+          maximum: 180
+        example: 21.0122
+      - name: distance
+        in: query
+        description: Search radius in kilometres around the spot (coordinates, or a geocoded post code or city).
+          Ignored when the spot cannot be geocoded.
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 50
+          default: 10
       - name: addressType
         in: query
         description: Point role requested from the carrier.
@@ -8971,7 +9135,9 @@ paths:
             type: number
       - name: pricingComponents[]
         in: query
-        description: Components included in prices.
+        description: 'Components included in prices. An explicitly empty list (`pricingComponents[]=`) means no extra
+          components (net price without fuel surcharge) and takes priority over the components stored in the price
+          list link (`hash`). Empty values are dropped; the remaining ones must be valid components.'
         style: form
         explode: true
         schema:
@@ -8980,6 +9146,7 @@ paths:
           items:
             type: string
             enum:
+            - ''
             - FUEL_SURCHARGE
             - VAT
       - name: packageTypes[]
@@ -9799,6 +9966,54 @@ paths:
                   value:
                     fields:
                       countryId: Unsupported country.
+      security:
+      - {}
+      - tokenAuth: []
+  /v1/siteAnnouncement:
+    get:
+      operationId: platformGetSiteAnnouncement
+      tags:
+      - Platform
+      summary: Get the site announcement
+      description: 'The announcement published for a page of the service. Returns `type` and a `message` in the request language
+        (`Accept-Language`),
+
+        English when the language has no text. `message` is plain text where a link is written as `[text](https://url)`; it is
+
+        not HTML. When nothing is announced the answer is `{"active": false}`. Cacheable for 60 seconds.
+
+        '
+      parameters:
+      - $ref: '#/components/parameters/AcceptLanguage'
+      - name: placement
+        in: query
+        required: true
+        description: The page the announcement is for.
+        schema:
+          type: string
+          enum:
+          - home
+          - results
+        example: home
+      responses:
+        '200':
+          description: The active announcement, or `{"active":false}` when there is none.
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                example: max-age=60, public
+            Vary:
+              description: The language comes from the `lang` cookie first, then `Accept-Language`.
+              schema:
+                type: string
+                example: Accept-Language, Cookie
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PlatformSiteAnnouncement'
+        '400':
+          $ref: '#/components/responses/BadRequest'
       security:
       - {}
       - tokenAuth: []
@@ -15314,6 +15529,18 @@ components:
           type: integer
           nullable: true
           description: GlobKurier country ID when resolved.
+        latitude:
+          type: number
+          format: double
+          nullable: true
+          description: WGS84 latitude of the result; null when the provider returned no coordinates.
+          example: 52.2125
+        longitude:
+          type: number
+          format: double
+          nullable: true
+          description: WGS84 longitude of the result; null when the provider returned no coordinates.
+          example: 21.0185
     IntegrationEmptyResponse:
       type: array
       description: Empty JSON array `[]`.
@@ -16332,6 +16559,7 @@ components:
         date:
           type: string
           format: date
+          description: "A day the carrier's holiday calendar blocks for the product is refused with `400` (`pickup[date]`), unless the calendar cannot be read: then the failure is logged and the day is not refused for that reason."
           example: '2030-01-15'
         timeFrom:
           type: string
@@ -18633,6 +18861,12 @@ components:
         longitude:
           type: number
           nullable: true
+        distanceInMeters:
+          type: integer
+          nullable: true
+          description: Metres from the searched spot; null for a search without one (point id, product only) or when it
+            could not be geocoded.
+          example: 350
     ProductCurrency:
       type: string
       enum:
@@ -19612,6 +19846,22 @@ components:
               value:
                 type: string
                 nullable: true
+    PlatformSiteAnnouncement:
+      type: object
+      description: Either `type` and `message` (an announcement is active) or `active` false (none).
+      properties:
+        type:
+          type: string
+          enum:
+          - info
+          - warning
+          - success
+        message:
+          type: string
+          description: Plain text; links in the `[text](https://url)` form.
+        active:
+          type: boolean
+          description: Present, and false, only when nothing is announced.
     PlatformTechnicalBreak:
       type: object
       required:
@@ -21772,7 +22022,7 @@ components:
           description: Display name of the carrier brand.
         logo:
           type: string
-          description: Relative logo path (e.g. `v2/brand/carrier/1.png`).
+          description: Absolute URL of the logo image (e.g. `https://api.globkurier.pl/v1/brand/carrier/1.png`), served by `GET /v1/brand/carrier/{name}`.
         zones:
           type: array
           items:
@@ -22582,7 +22832,7 @@ components:
             the same file the unfiltered carrier list shows; a brand no longer offered falls back to its first carrier.
             Matched to `carrier` ignoring case, spaces and punctuation (first carrier of a multiselect). null when no
             carrier is set or no brand matches.
-          example: v2/brand/carrier/12.png
+          example: https://api.globkurier.pl/v1/brand/carrier/12.png
         claimAmount:
           type: number
           nullable: true
